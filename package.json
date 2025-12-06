@@ -1,0 +1,12 @@
+{
+  "name": "mangalam-admin",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "echo 'admin'"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "pdf-parse": "^2.4.5"
+  }
+}
