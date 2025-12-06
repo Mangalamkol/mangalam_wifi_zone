@@ -73,23 +73,22 @@ exports.getActiveSessions = async () => {
 };
 
 exports.kickDevice = async (mac) => {
-  const token = await getToken();
-  if (!token) {
-    throw new Error("Failed to get OC200 token.");
-  }
-
   try {
-    const response = await axios.post(
-      `${OC200_URL}/api/v2/sites/${OMADA_ID}/clients/kick`,
-      { macs: [mac] },
+    const token = await getToken();
+    if (!token) return null;
+
+    const resp = await axios.post(
+      `${OC200_URL}/api/v2/sites/${OMADA_ID}/clients/${mac}/unauthorize`,
+      {},
       {
         headers: { "X-Csrf-Token": token },
         rejectUnauthorized: false,
       }
     );
-    return response.data;
-  } catch (error) {
-    console.error(`Failed to kick user with MAC ${mac}:`, error.response ? error.response.data : error.message);
-    throw new Error(`Failed to kick user with MAC ${mac}.`);
+
+    return resp.data;
+  } catch (err) {
+    console.error("Kick User Error:", err.message);
+    return null;
   }
 };
