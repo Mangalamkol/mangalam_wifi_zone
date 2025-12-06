@@ -57,7 +57,12 @@ export default function OC200Sessions() {
               <td>{d.upSpeed || 0} kbps</td>
               <td>{new Date(d.connectedAt).toLocaleString()}</td>
               <td>
-                <button onClick={() => handleKick(d.mac)}>Kick</button>
+                <button
+                  onClick={() => handleKick(d.mac)}
+                  style={{ background: "red", color: "white", padding: 5 }}
+                >
+                  Kick
+                </button>
               </td>
             </tr>
           ))}
