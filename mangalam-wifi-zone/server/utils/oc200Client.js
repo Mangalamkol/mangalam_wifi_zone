@@ -72,7 +72,7 @@ exports.getActiveSessions = async () => {
   }
 };
 
-exports.kickUser = async (mac) => {
+exports.kickDevice = async (mac) => {
   const token = await getToken();
   if (!token) {
     throw new Error("Failed to get OC200 token.");

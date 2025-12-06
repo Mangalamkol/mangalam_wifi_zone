@@ -23,11 +23,13 @@ exports.getSessions = async (req, res) => {
 };
 
 exports.kickUser = async (req, res) => {
-    const { mac } = req.body;
-    try {
-        await oc200.kickUser(mac);
-        res.json({ success: true, message: `User with MAC ${mac} kicked successfully.` });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
+  const { mac } = req.body;
+
+  if (!mac) return res.status(400).json({ error: "MAC required" });
+
+  const result = await oc200.kickDevice(mac);
+
+  if (!result) return res.status(500).json({ error: "Kick failed" });
+
+  return res.json({ ok: true, mac });
 };
