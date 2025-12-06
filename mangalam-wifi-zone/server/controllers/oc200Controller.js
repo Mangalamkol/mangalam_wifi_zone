@@ -21,3 +21,13 @@ exports.getSessions = async (req, res) => {
     const sessions = await oc200.getActiveSessions();
     res.json(sessions);
 };
+
+exports.kickUser = async (req, res) => {
+    const { mac } = req.body;
+    try {
+        await oc200.kickUser(mac);
+        res.json({ success: true, message: `User with MAC ${mac} kicked successfully.` });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};

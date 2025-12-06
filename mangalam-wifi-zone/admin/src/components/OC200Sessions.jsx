@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getSessions } from "../api/oc200";
+import { getSessions, kickUser } from "../api/oc200";
 
 export default function OC200Sessions() {
   const [list, setList] = useState([]);
@@ -7,6 +7,18 @@ export default function OC200Sessions() {
   async function loadData() {
     const res = await getSessions();
     setList(res.data);
+  }
+
+  async function handleKick(mac) {
+    if (window.confirm(`Are you sure you want to kick user with MAC: ${mac}?`)) {
+        try {
+            await kickUser(mac);
+            alert("User kicked successfully!");
+            loadData(); // Refresh the list
+        } catch (error) {
+            alert("Failed to kick user.");
+        }
+    }
   }
 
   useEffect(() => {
@@ -31,6 +43,7 @@ export default function OC200Sessions() {
             <th>Download</th>
             <th>Upload</th>
             <th>Connected Since</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -43,6 +56,9 @@ export default function OC200Sessions() {
               <td>{d.downSpeed || 0} kbps</td>
               <td>{d.upSpeed || 0} kbps</td>
               <td>{new Date(d.connectedAt).toLocaleString()}</td>
+              <td>
+                <button onClick={() => handleKick(d.mac)}>Kick</button>
+              </td>
             </tr>
           ))}
         </tbody>
