@@ -1,7 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
-BRANCH="${1:-main}"
+
+REPO_URL="${GITHUB_REPO_URL:-https://github.com/Mangalamkol/Manngalam-WiFi-Zone.git}"
+BRANCH="${GITHUB_BRANCH:-main}"
+
+if [ -z "$REPO_URL" ]; then
+  echo "GITHUB_REPO_URL not set. Export it or fill .env file."
+  exit 1
+fi
+
+git init 2>/dev/null || true
+if ! git remote | grep -q origin; then
+  git remote add origin "$REPO_URL"
+fi
+
 git add -A
-git commit -m "auto: repair and prepare for deploy" || true
-git push origin "$BRANCH"
-echo "Pushed to $BRANCH. If your Render service is connected to this repo+branch it will start a build automatically."
+git commit -m "Auto commit: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" || echo "Nothing to commit"
+git branch -M "$BRANCH" || true
+git push -u origin "$BRANCH" --force
