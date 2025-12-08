@@ -1,64 +1,56 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/bash
 
-# load .env if present
+# Exit immediately if a command exits with a non-zero status.
+set -e
+
+# Load environment variables from .env file robustly
+# This is a safer way than `export $(grep ...)`
 if [ -f .env ]; then
-  export $(grep -v \'^#\' .env | xargs)
+  set -a
+  source .env
+  set +a
 fi
 
-# sanity checks
-: "${GITHUB_REPO_URL:?please set GITHUB_REPO_URL in env or .env}"
-: "${RENDER_SERVICE_ID:?please set RENDER_SERVICE_ID in env or .env}"
-: "${RENDER_API_KEY:?please set RENDER_API_KEY in env or .env}"
-BRANCH="${GITHUB_BRANCH:-main}"
+# --- Sanity Checks ---
+# Ensure required variables are set, otherwise exit with a helpful message.
+: "${GITHUB_REPO_URL:?please set GITHUB_REPO_URL in your .env file}"
+: "${RENDER_SERVICE_ID:?please set RENDER_SERVICE_ID in your .env file}"
+: "${RENDER_API_KEY:?please set RENDER_API_KEY in your .env file}"
 
-echo "=== START FULL AUTO DEPLOY PIPELINE ==="
+echo "✅ Sanity checks passed. Required variables are set."
 
-# 1) Commit & push
-./commit_and_push.sh
+# --- Git Operations ---
+echo "INFO: Checking git status..."
+git status
 
-# 2) Build web client if exists
-if [ -d "web_client" ]; then
-  echo "Building web_client..."
-  cd web_client
-  npm install --no-audit --no-fund --silent || true
-  npm run build || { echo "web_client build failed"; cd -; exit 1; }
-  cd -
-fi
+# Add all changes to staging
+echo "INFO: Adding all changes to git..."
+git add .
 
-# 3) Build server (optional)
-if [ -d "server" ]; then
-  echo "Installing server deps..."
-  cd server
-  npm install --no-audit --no-fund --silent || true
-  cd -
-fi
+# Commit changes. If there are no changes, `git commit` will fail.
+# We use `|| echo "INFO: No changes to commit."` to catch this and continue.
+echo "INFO: Committing changes..."
+git commit -m "Auto-deploy: $(date +\'%Y-%m-%d %H:%M:%S\')" || echo "INFO: No changes to commit."
 
-# 4) Trigger Render deploy
-if ./render_trigger_deploy.sh; then
-  echo "Deployment succeeded."
-  echo "=== PIPELINE COMPLETE ==="
-  exit 0
-else
-  echo "Deployment failed — attempting rollback to last successful commit..."
+# Push changes to the main branch of the remote repository.
+echo "INFO: Pushing code to GitHub..."
+git push origin main
 
-  # find last successful deploy and redeploy using its commit
-  LAST_SUCCESS=$(curl -s -H "Authorization: Bearer $RENDER_API_KEY" "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys" | \
-    grep -oE \'"commit"[[:space:]]*:[[:space:]]*"[^"]+"|"state"[[:space:]]*:[[:space:]]*"[^"]+"\' | \
-    paste - - | grep \'"state": "success"\' | head -1 | sed -E \'s/.*"commit"[[:space:]]*:[[:space:]]*"([^"]+)".*/\\1/\')
+echo "✅ Code pushed to GitHub successfully."
 
-  if [ -z "$LAST_SUCCESS" ]; then
-    echo "No previous successful deploy found. Manual intervention required."
-    exit 2
-  fi
+# --- Render Deployment ---
+echo "INFO: Triggering Render deployment..."
 
-  echo "Last successful commit: $LAST_SUCCESS — redeploying it..."
-  export COMMIT_SHA="$LAST_SUCCESS"
-  if ./render_trigger_deploy.sh; then
-    echo "Rollback redeploy successful."
-    exit 0
-  else
-    echo "Rollback redeploy failed. Manual restore required."
-    exit 3
-  fi
-fi
+# Call the Render deploy hook using curl.
+# -X POST: Specifies a POST request.
+# -H "Authorization: Bearer ${RENDER_API_KEY}": Sets the authorization header.
+# -H "Accept: application/json": Indicates we accept a JSON response.
+# The URL targets the specific service and its deploy trigger.
+curl -X POST \
+  -H "Authorization: Bearer ${RENDER_API_KEY}" \
+  -H "Accept: application/json" \
+  "https://api.render.com/v1/services/${RENDER_SERVICE_ID}/deploys"
+
+echo "🚀 Deployment triggered on Render. Monitor the Render dashboard for progress."
+echo "🎉 Pipeline finished successfully!"
+
