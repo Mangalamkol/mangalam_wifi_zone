@@ -3,6 +3,7 @@ import Plans from "../components/Plans";
 import Coupons from "../components/Coupons";
 import Transactions from "../components/Transactions";
 import OC200 from "../components/OC200";
+import APLoadGraph from "../components/APLoadGraph";
 
 export default function Dashboard() {
   return (
@@ -18,6 +19,8 @@ export default function Dashboard() {
 
       {/* NEW MODULE */}
       <OC200 />
+      <br />
+      <APLoadGraph />
     </div>
   );
 }

@@ -1,39 +1,36 @@
-# To learn more about how to use Nix to configure your environment
-# see: https://firebase.google.com/docs/studio/customize-workspace
-{ pkgs, ... }: {
-  # Which nixpkgs channel to use.
-  channel = "stable-24.05"; # or "unstable"
-  # Use https://search.nixos.org/packages to find packages
+{ pkgs, ... }:
+
+{
+  # Select stable NixOS channel
+  channel = "stable-24.05";
+
+  # Packages to install
   packages = [
     pkgs.jdk21
     pkgs.unzip
+    pkgs.nodejs_20
   ];
-  # Sets environment variables in the workspace
-  env = {};
+
+  # Environment variables
+  env = {
+    WHATSAPP_VERIFY_TOKEN = "your_whatsapp_verify_token";
+    JWT_SECRET = "your_super_secret_jwt_key";
+    RAZORPAY_KEY = "your_razorpay_key";
+    RAZORPAY_SECRET = "your_razorpay_secret";
+    RAZORPAY_WEBHOOK_SECRET = "your_razorpay_webhook_secret";
+    WHATSAPP_ACCESS_TOKEN = "your_whatsapp_access_token";
+    WHATSAPP_PHONE_NUMBER_ID = "your_whatsapp_phone_number_id";
+
+    OC200_URL = "your_oc200_url";
+    OC200_USERNAME = "your_oc200_username";
+    OC200_PASSWORD = "your_oc200_password";
+  };
+
+  # VSCode Extensions
   idx = {
-    # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
       "Dart-Code.flutter"
       "Dart-Code.dart-code"
     ];
-    workspace = {
-      # Runs when a workspace is first created with this `dev.nix` file
-      onCreate = { };
-      # To run something each time the workspace is (re)started, use the `onStart` hook
-    };
-    # Enable previews and customize configuration
-    previews = {
-      enable = true;
-      previews = {
-        web = {
-          command = ["flutter" "run" "--machine" "-d" "web-server" "--web-hostname" "0.0.0.0" "--web-port" "$PORT"];
-          manager = "flutter";
-        };
-        android = {
-          command = ["flutter" "run" "--machine" "-d" "android" "-d" "localhost:5555"];
-          manager = "flutter";
-        };
-      };
-    };
   };
 }

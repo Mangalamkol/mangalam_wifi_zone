@@ -1,32 +1,39 @@
-const axios = require("axios");
+const axios = require('axios');
 
-const TOKEN = process.env.WHATSAPP_TOKEN;
-const PHONE_ID = process.env.WHATSAPP_PHONE_ID;
+const { WHATSAPP_API_TOKEN, WHATSAPP_PHONE_NUMBER_ID } = process.env;
 
-exports.sendText = async (to, message) => {
+const whatsappClient = axios.create({
+  baseURL: `https://graph.facebook.com/v18.0/${WHATSAPP_PHONE_NUMBER_ID}`,
+  headers: {
+    'Authorization': `Bearer ${WHATSAPP_API_TOKEN}`,
+    'Content-Type': 'application/json',
+  },
+});
+
+/**
+ * Sends a text message to a given phone number.
+ * @param {string} to - The recipient's phone number (with country code).
+ * @param {string} text - The message to send.
+ * @returns {Promise<object>} - The response from the WhatsApp API.
+ */
+const sendText = async (to, text) => {
   try {
-    const resp = await axios.post(
-      `https://graph.facebook.com/v19.0/${PHONE_ID}/messages`,
-      {
-        messaging_product: "whatsapp",
-        to,
-        type: "text",
-        text: { body: message },
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${TOKEN}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    return resp.data;
-  } catch (err) {
+    const response = await whatsappClient.post('/messages', {
+      messaging_product: 'whatsapp',
+      to,
+      type: 'text',
+      text: { body: text },
+    });
+    return response.data;
+  } catch (error) {
     console.error(
-      "WhatsApp send error:",
-      err.response ? err.response.data : err.message
+      'Error sending WhatsApp message:',
+      error.response ? error.response.data : error.message
     );
-    return null;
+    throw new Error('Failed to send WhatsApp message');
   }
+};
+
+module.exports = {
+  sendText,
 };

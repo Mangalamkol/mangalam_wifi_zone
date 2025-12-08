@@ -1,15 +1,29 @@
-const Transaction = require("../models/Transaction");
+const Transaction = require('../models/Transaction');
 
-const getAllTransactions = async (req, res) => {
-  try {
-    const transactions = await Transaction.find()
-      .populate("user", "phone")
-      .populate("plan", "name")
-      .populate("coupon", "code");
-    res.json(transactions);
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
-  }
+exports.listTransactions = async (req, res) => {
+    try {
+        const transactions = await Transaction.find().sort({ createdAt: -1 });
+        res.json(transactions);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 };
 
-module.exports = { getAllTransactions };
+exports.getTransaction = async (req, res) => {
+    try {
+        const transaction = await Transaction.findById(req.params.id);
+        res.json(transaction);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+exports.refundTransaction = async (req, res) => {
+    try {
+        const { id } = req.params;
+        // Placeholder for refund logic
+        res.json({ message: `Refund for transaction ${id} processed (placeholder)` });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};

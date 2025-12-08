@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const whatsappController = require('../controllers/whatsappController');
+const { sendCouponMessage, sendText, webhookHandler } = require('../controllers/whatsappController');
 
-router.post('/send', whatsappController.sendMessage);
-router.all('/webhooks', whatsappController.webhookHandler);
+router.post('/send-coupon', sendCouponMessage);
+router.post('/send-text', sendText);
+router.post('/webhook', webhookHandler);
 
 module.exports = router;

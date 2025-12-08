@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const planController = require('../controllers/planController');
+const { listPlans, createPlan, updatePlan, deletePlan } = require('../controllers/planController');
+const requireAdmin = require('../middleware/requireAdmin');
 
-router.get('/', planController.getVisiblePlans);
-router.get('/all', planController.getAllPlans);
-router.post('/', planController.createOrUpdatePlan);
+router.get('/', listPlans);
+router.post('/', requireAdmin, createPlan);
+router.put('/:id', requireAdmin, updatePlan);
+router.delete('/:id', requireAdmin, deletePlan);
 
 module.exports = router;

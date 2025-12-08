@@ -1,0 +1,17 @@
+name: mangalam_wifi_app
+description: Mangalam WiFi Zone Client App
+publish_to: "none"
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.0
+  provider: ^6.1.2
+  go_router: ^13.0.0
+  google_fonts: ^6.2.1
+
+flutter:
+  uses-material-design: true

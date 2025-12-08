@@ -1,11 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const couponController = require('../controllers/couponController');
-const multer = require('multer');
+const {
+  uploadCoupons,
+  getAvailableCoupons,
+  verifyCoupon,
+  assignCoupon,
+  disableExpired
+} = require('../controllers/couponController');
 
-const upload = multer({ dest: 'uploads/' });
+const requireAdmin = require('../middleware/requireAdmin');
 
-router.post('/upload', upload.single('pdf'), couponController.uploadCouponsPdf);
-router.get('/check/:code', couponController.checkCoupon);
+router.post('/upload', requireAdmin, uploadCoupons);
+router.get('/available/:planId', getAvailableCoupons);
+router.post('/verify', verifyCoupon);
+router.post('/assign', assignCoupon);
+
+// internal cron usage — protected
+router.post('/disable-expired', requireAdmin, disableExpired);
 
 module.exports = router;

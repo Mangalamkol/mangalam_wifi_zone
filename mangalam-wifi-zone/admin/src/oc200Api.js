@@ -11,3 +11,15 @@ export async function routerLogin(mac, voucher) {
 export async function getSessions() {
   return api.get("/oc200/sessions");
 }
+
+export async function getAPs() {
+  return api.get("/oc200/aps");
+}
+
+export async function getAPBreakdown() {
+  return api.get("/oc200/ap-breakdown");
+}
+
+export function getAPLoad() {
+  return api.get("/ap/ap-load");
+}

@@ -1,5 +1,17 @@
 {
   "projects": {
-    "default": "mangalamwifi"
+    "default": "mangalam-wifi-zone"
+  },
+  "targets": {
+    "mangalam-wifi-zone": {
+      "hosting": {
+        "admin": [
+          "mangalam-wifi-admin"
+        ],
+        "web_client": [
+          "mangalam-wifi-zone"
+        ]
+      }
+    }
   }
 }

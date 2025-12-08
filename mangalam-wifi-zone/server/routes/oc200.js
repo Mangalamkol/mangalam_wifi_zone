@@ -1,11 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const oc200Controller = require('../controllers/oc200Controller');
-const authMiddleware = require('../middleware/authMiddleware');
+const { loginUser, logoutUser, kickUser, getSessions, getApInfo, getApUserBreakdown, getApLoadGraph } =
+  require('../controllers/oc200Controller');
+const requireAdmin = require('../middleware/requireAdmin');
 
-router.post('/vouchers', oc200Controller.createVoucher);
-router.post('/login', oc200Controller.customerLogin);
-router.get("/sessions", oc200Controller.getSessions);
-router.post("/kick", authMiddleware, oc200Controller.kickUser);
+router.post('/login', loginUser);
+router.post('/logout', logoutUser);
+
+// Admin Panel Tools
+router.post('/kick-user', requireAdmin, kickUser);
+router.get('/sessions', requireAdmin, getSessions);
+router.get('/ap-info', requireAdmin, getApInfo);
+router.get('/ap-users', requireAdmin, getApUserBreakdown);
+router.get('/ap-load', requireAdmin, getApLoadGraph);
 
 module.exports = router;
