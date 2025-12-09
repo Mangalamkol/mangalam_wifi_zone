@@ -2,8 +2,7 @@
   "name": "mangalam-wifi-zone",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server/index.js",
-    "render-build": "cd server && npm install",
-    "render-start": "npm start"
+    "start": "cd server && node index.js",
+    "build": "echo 'No build step required'"
   }
 }

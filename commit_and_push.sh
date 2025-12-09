@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_URL="${GITHUB_REPO_URL:-https://github.com/Mangalamkol/Manngalam-WiFi-Zone.git}"
+REPO_URL="${GITHUB_REPO_URL:-https://github.com/MangalamKol/Mangalam-WiFi-Zone.git}"
 BRANCH="${GITHUB_BRANCH:-main}"
 
 if [ -z "$REPO_URL" ]; then

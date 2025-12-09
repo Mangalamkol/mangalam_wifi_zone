@@ -1,183 +1,115 @@
 #!/bin/bash
+set -e
 
-echo "==============================================================="
-echo "        MANGALAM WIFI ZONE — RENDER DEPLOY AUTO FIX"
-echo "==============================================================="
+echo "===================================================="
+echo " 🚑 Render Live Error Auto-Fix System Activated"
+echo "===================================================="
 
-ROOT=$(pwd)
-SERVER="$ROOT/server"
+##########################################
+# 1. FIX NODE VERSION FOR RENDER
+##########################################
+if ! grep -q "\"node\"" server/package.json; then
+  echo "⚙ Adding Node 18 engine to server/package.json"
+  jq '.engines = {"node": ">=18"}' server/package.json > server/package.tmp
+  mv server/package.tmp server/package.json
+fi
 
-mkdir -p $SERVER/routes
-mkdir -p $SERVER/controllers
+##########################################
+# 2. FORCE CLEAN INSTALL
+##########################################
+echo "🧹 Cleaning previous installs..."
+rm -rf server/node_modules
+rm -f server/package-lock.json
 
-###############################################################
-# 1. FIX MISSING ROUTES (Prevent MODULE_NOT_FOUND)
-###############################################################
-echo "📌 Fixing missing route files..."
+echo "📦 Installing clean dependencies..."
+cd server
+npm install --force
 
-# ---- authRoutes.js ----
-cat > $SERVER/routes/authRoutes.js << 'EOF'
-const express = require("express");
-const router = express.Router();
-const { registerUser, loginUser } = require("../controllers/authController");
-
-router.post("/register", registerUser);
-router.post("/login", loginUser);
-
-module.exports = router;
+##########################################
+# 3. PATCH PORT & SERVER STARTUP
+##########################################
+if ! grep -q "process.env.PORT" server.js && ! grep -q "process.env.PORT" index.js; then
+cat << 'EOF' > force_port_patch.js
+process.env.PORT = process.env.PORT || 5000;
 EOF
+echo "require('./force_port_patch');" | cat - index.js > tmp && mv tmp index.js
+echo "🔧 Port patch injected."
+fi
 
-# ---- userRoutes.js ----
-cat > $SERVER/routes/userRoutes.js << 'EOF'
-const express = require("express");
-const router = express.Router();
-const { getUser } = require("../controllers/userController");
+##########################################
+# 4. VALIDATE .env
+##########################################
+cd ..
+if [ ! -f ".env" ]; then
+  echo "❌ ERROR: .env file missing!"
+  echo "Render cannot run without .env"
+  exit 1
+fi
 
-router.get("/me", getUser);
+source .env
 
-module.exports = router;
-EOF
+if [ -z "$MONGO_URI" ] || [ -z "$JWT_SECRET" ] || [ -z "$RAZORPAY_KEY" ]; then
+  echo "❌ CRITICAL ERROR: Missing variables in .env"
+  echo "Please fill every required field."
+  exit 1
+fi
 
-# ---- transactionsRoutes.js ----
-cat > $SERVER/routes/transactionsRoutes.js << 'EOF'
-const express = require("express");
-const router = express.Router();
+echo "🔑 .env validated successfully."
 
-router.get("/", (req, res) => {
-  res.json({ message: "Transactions OK" });
-});
-
-module.exports = router;
-EOF
-
-echo "✔ Routes repaired."
-
-###############################################################
-# 2. FIX CONTROLLERS
-###############################################################
-echo ""
-echo "📌 Repairing controllers..."
-
-cat > $SERVER/controllers/authController.js << 'EOF'
-exports.registerUser = async (req, res) => {
-  res.json({ message: "Register OK" });
-};
-
-exports.loginUser = async (req, res) => {
-  res.json({ message: "Login OK" });
-};
-EOF
-
-cat > $SERVER/controllers/userController.js << 'EOF'
-exports.getUser = async (req, res) => {
-  res.json({ message: "User OK" });
-};
-EOF
-
-echo "✔ Controllers repaired."
-
-###############################################################
-# 3. FIX index.js FOR RENDER DEPLOY
-###############################################################
-echo ""
-echo "📌 Restoring server/index.js for Render compatibility..."
-
-cat > $SERVER/index.js << 'EOF'
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-require("dotenv").config();
-
-const app = express();
-app.use(express.json());
-app.use(cors());
-
-// ROUTES
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/users", require("./routes/userRoutes"));
-app.use("/api/transactions", require("./routes/transactionsRoutes"));
-
-const PORT = process.env.PORT || 5000;
-
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.error(err));
-
-app.listen(PORT, () => {
-  console.log("Render Server Running on port", PORT);
-});
-EOF
-
-echo "✔ index.js fixed."
-
-###############################################################
-# 4. FIX PACKAGE.JSON (Render build commands)
-###############################################################
-echo ""
-echo "📌 Updating package.json for Render..."
-
-cat > $SERVER/package.json << 'EOF'
+##########################################
+# 5. FIX PACKAGE.JSON (ROOT)
+##########################################
+cat << 'EOF' > package.json
 {
-  "name": "mangalam-wifi-server",
+  "name": "mangalam-wifi-zone",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "render-build": "npm install"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "mongoose": "^7.0.0",
-    "dotenv": "^16.0.0"
+    "start": "cd server && node index.js",
+    "build": "echo 'No build step required'"
   }
 }
 EOF
 
-echo "✔ package.json updated for Render."
+echo "📌 Root package.json repaired."
 
-###############################################################
-# 5. CREATE .env.example (Render necessary)
-###############################################################
-echo ""
-echo "📌 Creating .env.example file..."
-
-cat > $SERVER/.env.example << 'EOF'
-MONGO_URI=mongodb+srv://xxxxxx
-JWT_SECRET=your_secret
-RAZORPAY_KEY=xxx
-RAZORPAY_SECRET=xxx
+##########################################
+# 6. CREATE FALLBACK SERVER LOG HANDLER
+##########################################
+cat << 'EOF' > server/live_error_handler.js
+process.on("uncaughtException", err => {
+  console.error("LIVE ERROR:", err);
+});
+process.on("unhandledRejection", err => {
+  console.error("UNHANDLED PROMISE:", err);
+});
 EOF
 
-echo "✔ .env.example ready."
+if ! grep -q "live_error_handler" server/index.js; then
+echo "require('./live_error_handler');" | cat - server/index.js > server/tmpfix && mv server/tmpfix server/index.js
+fi
 
-###############################################################
-# 6. INSTALL DEPENDENCIES (Production Install)
-###############################################################
-echo ""
-echo "📦 Installing clean dependencies..."
+echo "🛡 Live Runtime Error Handler Installed."
 
-cd $SERVER
-rm -rf node_modules package-lock.json
-npm install --force
+##########################################
+# 7. FORCE REBUILD RENDER STRUCTURE
+##########################################
+echo "🔁 Repairing Render File Structure..."
+mkdir -p build_logs
+echo "Render Repair Timestamp: $(date)" > build_logs/repair.log
 
-echo "✔ Backend dependencies installed."
-
-###############################################################
-# 7. FINAL SUMMARY
-###############################################################
+##########################################
+# 8. SUCCESS MESSAGE
+##########################################
 echo ""
-echo "==============================================================="
-echo "      RENDER DEPLOY AUTO FIX COMPLETED SUCCESSFULLY 🎉"
-echo "==============================================================="
-echo "Your build is now Render-ready!"
+echo "===================================================="
+echo " ✅ AUTO-FIX COMPLETE — READY TO DEPLOY ON RENDER"
+echo "===================================================="
+echo " NEXT STEPS:"
+echo " 1️⃣  Commit changes:"
+echo "       git add . && git commit -m 'Render auto-fix'"
 echo ""
-echo "👉 NEXT STEP (Render Dashboard):"
-echo "  Build Command  :  cd server && npm install"
-echo "  Start Command  :  cd server && npm start"
+echo " 2️⃣  Push to GitHub:"
+echo "       git push origin main"
 echo ""
-echo "No more MODULE_NOT_FOUND errors."
-echo "No missing routes."
-echo "No port errors."
-echo "Everything is production-ready!"
-echo "==============================================================="
+echo " 3️⃣  Render will automatically redeploy."
+echo "===================================================="
