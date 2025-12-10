@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mangalam_wifi_zone/screens/mangalam_new_screens.dart' as screens;
 
 void main() {
   runApp(
@@ -30,11 +31,54 @@ class ThemeProvider with ChangeNotifier {
 }
 
 final GoRouter _router = GoRouter(
+  initialLocation: '/',
   routes: <RouteBase>[
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
         return const HomePage();
+      },
+    ),
+    GoRoute(
+      path: screens.NewScreensRoutes.speedTest,
+      builder: (BuildContext context, GoRouterState state) {
+        return const screens.SpeedTestScreen();
+      },
+    ),
+    GoRoute(
+      path: screens.NewScreensRoutes.loginOtp,
+      builder: (BuildContext context, GoRouterState state) {
+        return const screens.LoginOtpScreen();
+      },
+    ),
+    GoRoute(
+      path: screens.NewScreensRoutes.dashboard,
+      builder: (BuildContext context, GoRouterState state) {
+        return const screens.DashboardScreen();
+      },
+    ),
+    GoRoute(
+      path: screens.NewScreensRoutes.recharge,
+      builder: (BuildContext context, GoRouterState state) {
+        return const screens.RechargeScreen();
+      },
+    ),
+    GoRoute(
+      path: screens.NewScreensRoutes.plans,
+      builder: (BuildContext context, GoRouterState state) {
+        return const screens.PlansScreen();
+      },
+    ),
+    GoRoute(
+      path: screens.NewScreensRoutes.liveMedia,
+      builder: (BuildContext context, GoRouterState state) {
+        return const screens.LiveMediaScreen();
+      },
+    ),
+    GoRoute(
+      path: screens.NewScreensRoutes.oc200,
+      builder: (BuildContext context, GoRouterState state) {
+        return const screens.Oc200LoginScreen();
       },
     ),
   ],
@@ -142,7 +186,7 @@ class HomePage extends StatelessWidget {
           gradient: LinearGradient(
             colors: [
               Theme.of(context).colorScheme.primary.withOpacity(0.1),
-              Theme.of(context).colorScheme.surface,
+              Theme.of(context).colorScheme.background,
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -175,20 +219,14 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 40),
                 ElevatedButton.icon(
                   icon: const Icon(Icons.speed),
-                  onPressed: () {},
+                  onPressed: () => context.go(screens.NewScreensRoutes.speedTest),
                   label: const Text('Check Internet Speed'),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton.icon(
-                  icon: const Icon(Icons.support_agent),
-                  onPressed: () {},
-                  label: const Text('Contact Support'),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton.icon(
-                  icon: const Icon(Icons.account_circle),
-                  onPressed: () {},
-                  label: const Text('My Account'),
+                  icon: const Icon(Icons.login),
+                  onPressed: () => context.go(screens.NewScreensRoutes.loginOtp),
+                  label: const Text('Login / My Account'),
                 ),
               ],
             ),
