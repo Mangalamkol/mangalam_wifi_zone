@@ -1,9 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:go_router/go_router.dart';
-import 'package:mangalam_wifi_zone/screens/mangalam_new_screens.dart' as screens;
+
+import 'screens/mangalam_new_screens.dart' as screens;
 
 void main() {
   runApp(
@@ -31,18 +32,12 @@ class ThemeProvider with ChangeNotifier {
 }
 
 final GoRouter _router = GoRouter(
-  initialLocation: '/',
+  initialLocation: screens.NewScreensRoutes.loginOtp,
   routes: <RouteBase>[
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
         return const HomePage();
-      },
-    ),
-    GoRoute(
-      path: screens.NewScreensRoutes.speedTest,
-      builder: (BuildContext context, GoRouterState state) {
-        return const screens.SpeedTestScreen();
       },
     ),
     GoRoute(
@@ -55,6 +50,12 @@ final GoRouter _router = GoRouter(
       path: screens.NewScreensRoutes.dashboard,
       builder: (BuildContext context, GoRouterState state) {
         return const screens.DashboardScreen();
+      },
+    ),
+    GoRoute(
+      path: screens.NewScreensRoutes.speedTest,
+      builder: (BuildContext context, GoRouterState state) {
+        return const screens.SpeedTestScreen();
       },
     ),
     GoRoute(
@@ -71,7 +72,7 @@ final GoRouter _router = GoRouter(
     ),
     GoRoute(
       path: screens.NewScreensRoutes.liveMedia,
-      builder: (BuildContext context, GoRouterState state) {
+      builder: (BuildContext acontext, GoRouterState state) {
         return const screens.LiveMediaScreen();
       },
     ),
@@ -212,21 +213,15 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  'Your one-stop solution for high-speed internet.',
+                  'You are logged in!',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 40),
                 ElevatedButton.icon(
-                  icon: const Icon(Icons.speed),
-                  onPressed: () => context.go(screens.NewScreensRoutes.speedTest),
-                  label: const Text('Check Internet Speed'),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton.icon(
-                  icon: const Icon(Icons.login),
+                  icon: const Icon(Icons.logout),
                   onPressed: () => context.go(screens.NewScreensRoutes.loginOtp),
-                  label: const Text('Login / My Account'),
+                  label: const Text('Logout'),
                 ),
               ],
             ),

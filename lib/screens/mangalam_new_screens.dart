@@ -1,4 +1,9 @@
 
+// File: lib/screens/mangalam_new_screens.dart
+// Purpose: Add new screens for Mangalam WiFi Zone Flutter app
+// Instructions: Add these files into your Flutter project's lib/ directory and
+// wire up routes in main.dart. Update pubspec.yaml to include required packages.
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
