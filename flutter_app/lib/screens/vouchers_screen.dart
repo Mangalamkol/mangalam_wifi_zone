@@ -1,1 +1,104 @@
-\'dart:convert\';\nimport \'package:flutter/material.dart\';\nimport \'package:http/http.dart\' as http;\nimport \'package:mangalam_wifi_zone/screens/create_voucher_screen.dart\';\n\nclass VouchersScreen extends StatefulWidget {\n  final String ipAddress;\n  final String token;\n\n  const VouchersScreen({super.key, required this.ipAddress, required this.token});\n\n  @override\n  State<VouchersScreen> createState() => _VouchersScreenState();\n}\n\nclass _VouchersScreenState extends State<VouchersScreen> {\n  List<dynamic> _vouchers = [];\n  bool _isLoading = true;\n  String _error = \'\';\n\n  @override\n  void initState() {\n    super.initState();\n    _fetchVouchers();\n  }\n\n  Future<void> _fetchVouchers() async {\n    setState(() {\n      _isLoading = true;\n      _error = \'\';\n    });\n\n    final Uri url = Uri.parse(\'https://\${widget.ipAddress}/api/v2/hotspot/vouchers?token=\${widget.token}\');\n\n    try {\n      final response = await http.get(url, headers: {\'Content-Type\': \'application/json; charset=UTF-8\'});\n      final responseBody = jsonDecode(response.body);\n\n      if (response.statusCode == 200 && responseBody[\'errorCode\'] == 0) {\n        setState(() {\n          _vouchers = responseBody[\'result\'][\'data\'];\n          _isLoading = false;\n        });\n      } else {\n        setState(() {\n          _error = \'Failed to fetch vouchers: \${responseBody[\'msg\'] ?? \'Unknown error\'}\';\n          _isLoading = false;\n        });\n      }\n    } catch (e) {\n      setState(() {\n        _error = \'Error: \${e.toString()}\';\n        _isLoading = false;\n      });\n    }\n  }\n\n  void _navigateAndRefresh() async {\n    final result = await Navigator.push(\n      context,\n      MaterialPageRoute(\n        builder: (context) => CreateVoucherScreen(ipAddress: widget.ipAddress, token: widget.token),\n      ),\n    );\n\n    if (result == true) {\n      _fetchVouchers();\n    }\n  }\n\n  @override\n  Widget build(BuildContext context) {\n    return Scaffold(\n      appBar: AppBar(\n        title: const Text(\'Vouchers\'),\n        actions: [\n          IconButton(\n            icon: const Icon(Icons.refresh),\n            onPressed: _fetchVouchers,\n          ),\n        ],\n      ),\n      body: _isLoading\n          ? const Center(child: CircularProgressIndicator())\n          : _error.isNotEmpty\n              ? Center(child: Text(_error, style: const TextStyle(color: Colors.red)))\n              : ListView.builder(\n                  itemCount: _vouchers.length,\n                  itemBuilder: (context, index) {\n                    final voucher = _vouchers[index];\n                    return ListTile(\n                      title: Text(voucher[\'code\'] ?? \'No Code\'),\n                      subtitle: Text(\'Status: \${voucher[\'status\'] == 0 ? \'Unused\' : \'Used\'}\'),\n                      trailing: Text(\'Created: \${DateTime.fromMillisecondsSinceEpoch(voucher[\'create_time\'] * 1000)}\'),\n                    );\n                  },\n                ),\n      floatingActionButton: FloatingActionButton(\n        onPressed: _navigateAndRefresh,\n        child: const Icon(Icons.add),\n      ),\n    );\n  }\n}\n
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'create_voucher_screen.dart';
+
+class VouchersScreen extends StatefulWidget {
+  final String ipAddress;
+  final String token;
+
+  const VouchersScreen({super.key, required this.ipAddress, required this.token});
+
+  @override
+  State<VouchersScreen> createState() => _VouchersScreenState();
+}
+
+class _VouchersScreenState extends State<VouchersScreen> {
+  List<dynamic> _vouchers = [];
+  bool _isLoading = true;
+  String _error = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchVouchers();
+  }
+
+  Future<void> _fetchVouchers() async {
+    setState(() {
+      _isLoading = true;
+      _error = '';
+    });
+
+    final Uri url = Uri.parse('https://${widget.ipAddress}/api/v2/hotspot/vouchers?token=${widget.token}');
+
+    try {
+      final response = await http.get(url, headers: {'Content-Type': 'application/json; charset=UTF-8'});
+      final responseBody = jsonDecode(response.body);
+
+      if (response.statusCode == 200 && responseBody['errorCode'] == 0) {
+        setState(() {
+          _vouchers = responseBody['result']['data'];
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _error = 'Failed to fetch vouchers: ${responseBody['msg'] ?? 'Unknown error'}';
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _error = 'Error: ${e.toString()}';
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _navigateAndRefresh() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CreateVoucherScreen(ipAddress: widget.ipAddress, token: widget.token),
+      ),
+    );
+
+    if (result == true) {
+      _fetchVouchers();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Vouchers'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _fetchVouchers,
+          ),
+        ],
+      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _error.isNotEmpty
+              ? Center(child: Text(_error, style: const TextStyle(color: Colors.red)))
+              : ListView.builder(
+                  itemCount: _vouchers.length,
+                  itemBuilder: (context, index) {
+                    final voucher = _vouchers[index];
+                    return ListTile(
+                      title: Text(voucher['code'] ?? 'No Code'),
+                      subtitle: Text('Status: ${voucher['status'] == 0 ? 'Unused' : 'Used'}'),
+                      trailing: Text('Created: ${DateTime.fromMillisecondsSinceEpoch(voucher['create_time'] * 1000)}'),
+                    );
+                  },
+                ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _navigateAndRefresh,
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
