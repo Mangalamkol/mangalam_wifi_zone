@@ -1,36 +1,30 @@
-{ pkgs, ... }:
-
-{
-  # Select stable NixOS channel
-  channel = "stable-24.05";
-
-  # Packages to install
+'{ pkgs, ... }: {
+  # Which nixpkgs channel to use.
+  channel = "stable-23.11"; # Or "unstable"
+  # Use https://search.nixos.org/packages to find packages
   packages = [
-    pkgs.jdk21
-    pkgs.unzip
-    pkgs.nodejs_20
+    pkgs.flutter
+    pkgs.dart
+    pkgs.mongodb
   ];
-
-  # Environment variables
-  env = {
-    WHATSAPP_VERIFY_TOKEN = "your_whatsapp_verify_token";
-    JWT_SECRET = "your_super_secret_jwt_key";
-    RAZORPAY_KEY = "your_razorpay_key";
-    RAZORPAY_SECRET = "your_razorpay_secret";
-    RAZORPAY_WEBHOOK_SECRET = "your_razorpay_webhook_secret";
-    WHATSAPP_ACCESS_TOKEN = "your_whatsapp_access_token";
-    WHATSAPP_PHONE_NUMBER_ID = "your_whatsapp_phone_number_id";
-
-    OC200_URL = "your_oc200_url";
-    OC200_USERNAME = "your_oc200_username";
-    OC200_PASSWORD = "your_oc200_password";
+  # Sets environment variables in the workspace
+  env = {};
+  # Fast way to run commands such as `npm install` on startup.
+  startup = {
+    # Add commands that should be run in sequence
+    # commands = [
+    #   {
+    #     command = "npm install"; # This is an example. Replace with your own.
+    #     # silently = false; # This is the default. Set to true to hide command output.
+    #     #
+    #     # Read more about command objects:
+    #     # https://developers.google.com/idx/guides/customize-idx-env#command-objects
+    #   }
+    # ];
   };
-
-  # VSCode Extensions
-  idx = {
-    extensions = [
-      "Dart-Code.flutter"
-      "Dart-Code.dart-code"
-    ];
+  # Pinned Nixpkgs version, required for IDX check
+  nixpkgs = {
+    url = "https://github.com/NixOS/nixpkgs/archive/refs/tags/23.11.zip";
+    sha256 = "1e9124d7168053243c3333333333333333333333333333333333333333333333"; # Replace with the correct sha256
   };
 }

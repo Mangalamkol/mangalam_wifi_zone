@@ -1,222 +1,128 @@
-
+import 'dart:async';
+import 'dart:developer' as developer;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'firebase_options.dart';
+import 'theme.dart';
 
-import 'oc200_screen.dart';
+// Screens
+import 'screens/login_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/coming_soon_screen.dart';
+import 'screens/settings_screen.dart';
+import 'screens/pdf_upload_screen.dart';
+import 'screens/redeem_code_screen.dart';
 
-void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child: const MyApp(),
-    ),
-  );
+void main() async {
+  // Use runZonedGuarded to catch all errors, sync and async
+  await runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
+    // Catches errors reported by the Flutter framework
+    FlutterError.onError = (FlutterErrorDetails details) {
+      developer.log(
+        'Flutter error caught',
+        name: 'com.mangalam.app.fluttererror',
+        error: details.exception,
+        stackTrace: details.stack,
+        level: 1000, // SEVERE
+      );
+    };
+
+    // Catches all other Dart errors that are not caught by the Flutter framework
+    PlatformDispatcher.instance.onError = (error, stack) {
+      developer.log(
+        'Platform error caught',
+        name: 'com.mangalam.app.platformerror',
+        error: error,
+        stackTrace: stack,
+        level: 1000, // SEVERE
+      );
+      return true; // Marks the error as handled.
+    };
+
+    runApp(
+      ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+        child: const MyApp(),
+      ),
+    );
+  }, (error, stack) {
+    // Catches errors that occur outside of the Flutter framework.
+    developer.log(
+      'Zone error caught',
+      name: 'com.mangalam.app.zoneerror',
+      error: error,
+      stackTrace: stack,
+      level: 1000, // SEVERE
+    );
+  });
 }
-
-// ThemeProvider class to manage the theme state
-class ThemeProvider with ChangeNotifier {
-  ThemeMode _themeMode = ThemeMode.system;
-
-  ThemeMode get themeMode => _themeMode;
-
-  void toggleTheme() {
-    _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-    notifyListeners();
-  }
-
-  void setSystemTheme() {
-    _themeMode = ThemeMode.system;
-    notifyListeners();
-  }
-}
-
-// GoRouter configuration
-final GoRouter _router = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const MyHomePage();
-      },
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'details/:id',
-          builder: (BuildContext context, GoRouterState state) {
-            final String id = state.pathParameters['id']!;
-            return DetailScreen(id: id);
-          },
-        ),
-        GoRoute(
-          path: 'settings',
-          builder: (BuildContext context, GoRouterState state) {
-            return const SettingsScreen();
-          },
-        ),
-        GoRoute(
-          path: 'oc200',
-          builder: (BuildContext context, GoRouterState state) {
-            return const OC200Screen();
-          },
-        ),
-      ],
-    ),
-  ],
-);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const Color primarySeedColor = Colors.deepPurple;
-
-    // Define a common TextTheme
-    final TextTheme appTextTheme = TextTheme(
-      displayLarge: GoogleFonts.oswald(fontSize: 57, fontWeight: FontWeight.bold),
-      titleLarge: GoogleFonts.roboto(fontSize: 22, fontWeight: FontWeight.w500),
-      bodyMedium: GoogleFonts.openSans(fontSize: 14),
-    );
-
-    // Light Theme
-    final ThemeData lightTheme = ThemeData(
-      useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: primarySeedColor,
-        brightness: Brightness.light,
-      ),
-      textTheme: appTextTheme,
-      appBarTheme: AppBarTheme(
-        backgroundColor: primarySeedColor,
-        foregroundColor: Colors.white,
-        titleTextStyle: GoogleFonts.oswald(fontSize: 24, fontWeight: FontWeight.bold),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: primarySeedColor,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          textStyle: GoogleFonts.roboto(fontSize: 16, fontWeight: FontWeight.w500),
-        ),
-      ),
-    );
-
-    // Dark Theme
-    final ThemeData darkTheme = ThemeData(
-      useMaterial3: true,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: primarySeedColor,
-        brightness: Brightness.dark,
-      ),
-      textTheme: appTextTheme,
-      appBarTheme: AppBarTheme(
-        backgroundColor: Colors.grey[900],
-        foregroundColor: Colors.white,
-        titleTextStyle: GoogleFonts.oswald(fontSize: 24, fontWeight: FontWeight.bold),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.black,
-          backgroundColor: primarySeedColor.shade200,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          textStyle: GoogleFonts.roboto(fontSize: 16, fontWeight: FontWeight.w500),
-        ),
-      ),
-    );
-
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child) {
         return MaterialApp.router(
-          routerConfig: _router,
-          title: 'OC200 Manager',
-          theme: lightTheme,
-          darkTheme: darkTheme,
+          title: 'Flutter Modern App',
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
           themeMode: themeProvider.themeMode,
+          routerConfig: _router,
+          builder: (context, child) {
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.3)),
+              child: child!,
+            );
+          },
         );
       },
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('OC200 Manager'),
-        actions: [
-          IconButton(
-            icon: Icon(themeProvider.themeMode == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode),
-            onPressed: () => themeProvider.toggleTheme(),
-            tooltip: 'Toggle Theme',
-          ),
-          IconButton(
-            icon: const Icon(Icons.auto_mode),
-            onPressed: () => themeProvider.setSystemTheme(),
-            tooltip: 'Set System Theme',
-          ),
-        ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Welcome!', style: Theme.of(context).textTheme.displayLarge),
-            const SizedBox(height: 20),
-            Text('Manage your OC200 Controller.', style: Theme.of(context).textTheme.bodyMedium),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () => context.go('/oc200'),
-              child: const Text('Go to OC200 Control Panel'),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () => context.go('/settings'),
-              child: const Text('Go to Settings'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class DetailScreen extends StatelessWidget {
-  final String id;
-  const DetailScreen({super.key, required this.id});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Detail Screen: $id')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () => context.pop(),
-          child: const Text('Go Back'),
-        ),
-      ),
-    );
-  }
-}
-
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Settings Screen')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () => context.pop(),
-          child: const Text('Go Back'),
-        ),
-      ),
-    );
-  }
-}
+final _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const HomeScreen(),
+      redirect: (context, state) {
+        final user = FirebaseAuth.instance.currentUser;
+        if (user == null) {
+          return '/login';
+        }
+        return null;
+      },
+    ),
+    GoRoute(
+      path: '/coming-soon',
+      builder: (context, state) => const ComingSoonScreen(),
+    ),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => const SettingsScreen(),
+    ),
+    GoRoute(
+      path: '/pdf-upload',
+      builder: (context, state) => const PdfUploadScreen(),
+    ),
+    GoRoute(
+      path: '/redeem-code',
+      builder: (context, state) => const RedeemCodeScreen(),
+    ),
+  ],
+);

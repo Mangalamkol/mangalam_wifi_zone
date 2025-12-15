@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'shared/themes/indian_theme.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MangalamApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MangalamApp extends StatelessWidget {
+  const MangalamApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp(
+      title: 'Mangalam WiFi Zone',
+      debugShowCheckedModeBanner: false,
+      theme: IndianTheme.lightTheme,
+      home: const Placeholder(), // পরবর্তী ধাপে replace হবে
     );
   }
 }
