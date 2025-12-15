@@ -1,59 +1,23 @@
 
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.buildlog/
-.history
-.svn/
-
-# Flutter generated files
+# Flutter
+build/
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
-.packages
-.pub-cache/
-.pub/
-/build/
-
-# Android
-/android/app/src/main/assets/flutter_assets/
-/android/app/build/
-/android/app/src/main/java/io/flutter/plugins/
-/android/build/
-/android/gradle/
-/android/.gradle/
-/android/gradlew
-/android/gradlew.bat
-/android/local.properties
-/android/key.properties
-/android/app/google-services.json
-
-# iOS
-/ios/Flutter/
-/ios/Pods/
-/ios/Runner/GeneratedPluginRegistrant.h
-/ios/Runner/GeneratedPluginRegistrant.m
-/ios/Runner/Runner-Bridging-Header.h
-/ios/Runner/Runner.xcworkspace/
-/ios/Runner.xcworkspace/
-/ios/Runner.xcodeproj/
-/ios/Podfile
-/ios/Podfile.lock
-/ios/ServiceDefinitions.json
-
-# Web
-.react-client/
-
-# Node
-node_modules/
-npm-debug.log
-yarn-error.log
 
 # IDE files
 .idea/
-*.iml
 .vscode/
+
+# Other
+*.iml
+*.hprof
+*.log
+*.pid
+*.seed
+*.sublime-project
+*.sublime-workspace
+
+# Server
+server/data/
+server/node_modules/

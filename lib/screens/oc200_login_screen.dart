@@ -59,7 +59,7 @@ class _Oc200LoginScreenState extends State<Oc200LoginScreen> {
           'ssid': ssid,
           'voucher': voucher,
         }),
-      ).timeout(Duration(seconds: 10));
+      ).timeout(const Duration(seconds: 10));
 
       final body = jsonDecode(resp.body);
       if (resp.statusCode == 200 && body['success'] == true) {
@@ -83,33 +83,33 @@ class _Oc200LoginScreenState extends State<Oc200LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("OC200 Voucher Login")),
+      appBar: AppBar(title: const Text("OC200 Voucher Login")),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(children: [
           TextField(
             controller: _urlCtrl,
-            decoration: InputDecoration(labelText: "Captive entry URL (optional)"),
+            decoration: const InputDecoration(labelText: "Captive entry URL (optional)"),
             onSubmitted: (v) => _parseEntry(v),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Row(children: [
             Expanded(child: Text("Client MAC: ${clientMac ?? '-'}")),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Text("AP MAC: ${apMac ?? '-'}"),
           ]),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           TextField(
             controller: _voucherCtrl,
-            decoration: InputDecoration(labelText: "Voucher code"),
+            decoration: const InputDecoration(labelText: "Voucher code"),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           ElevatedButton(
             onPressed: _loading ? null : _login,
-            child: _loading ? CircularProgressIndicator(color: Colors.white) : Text("Login")
+            child: _loading ? const CircularProgressIndicator(color: Colors.white) : const Text("Login")
           ),
-          SizedBox(height: 12),
-          Text(_message, style: TextStyle(color: Colors.red)),
+          const SizedBox(height: 12),
+          Text(_message, style: const TextStyle(color: Colors.red)),
         ]),
       ),
     );
