@@ -4,7 +4,6 @@ services:
     env: node
     plan: free
     region: oregon
-    buildCommand: npm install express
     startCommand: node health-check.js
     branch: main
     autoDeploy: true
