@@ -1,15 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-/**
- * Health Check
- */
+// Health check route
 router.get('/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    service: 'Mangalam WiFi Zone API',
-    time: new Date().toISOString()
-  });
+  res.status(200).send('OK');
 });
 
 module.exports = router;
