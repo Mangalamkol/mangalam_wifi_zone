@@ -6,7 +6,7 @@
     "build:admin": "cd admin && npm run build && rm -rf ../server/public/admin && mkdir -p ../server/public/admin && cp -R dist/* ../server/public/admin/",
     "build:client": "cd client && flutter build web --release && rm -rf ../server/public/client && mkdir -p ../server/public/client && cp -R build/web/* ../server/public/client/",
     "build": "npm run build:admin && npm run build:client",
-    "start": "cd server && node server.js",
+    "start": "cd server && node index.js",
     "dev": "concurrently \"cd server && npm run dev\" \"cd admin && npm run dev\""
   },
   "devDependencies": {
