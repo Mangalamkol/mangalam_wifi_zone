@@ -15,8 +15,8 @@ const oc200Routes = require('./oc200Routes');
 apiRouter.get('/', (req, res) => {
   res.json({
     status: 'OK',
-    service: 'Mangalam WiFi Zone API',
-    time: new Date()
+    service: 'Mangalam WiFi Zone Backend',
+    time: new Date().toISOString()
   });
 });
 
