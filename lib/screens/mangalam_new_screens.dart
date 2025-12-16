@@ -48,7 +48,7 @@ PreferredSizeWidget buildAppBar(String title) {
 // ---------------------------
 
 class SpeedTestScreen extends StatefulWidget {
-  const SpeedTestScreen({Key? key}) : super(key: key);
+  const SpeedTestScreen({super.key});
 
   @override
   State<SpeedTestScreen> createState() => _SpeedTestScreenState();
@@ -111,7 +111,7 @@ class _SpeedTestScreenState extends State<SpeedTestScreen> {
             Center(
               child: _running
                   ? Column(children: const [CircularProgressIndicator(), SizedBox(height: 8), Text('Running...')])
-                  : Text('Result: ${_downloadMbps} Mbps', style: const TextStyle(fontSize: 24)),
+                  : Text('Result: $_downloadMbps Mbps', style: const TextStyle(fontSize: 24)),
             ),
             const SizedBox(height: 12),
             Text('Status: $_status'),
@@ -135,7 +135,7 @@ class _SpeedTestScreenState extends State<SpeedTestScreen> {
 // ---------------------------
 
 class LoginOtpScreen extends StatefulWidget {
-  const LoginOtpScreen({Key? key}) : super(key: key);
+  const LoginOtpScreen({super.key});
 
   @override
   State<LoginOtpScreen> createState() => _LoginOtpScreenState();
@@ -197,7 +197,7 @@ class _LoginOtpScreenState extends State<LoginOtpScreen> {
 // ---------------------------
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+  const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -226,8 +226,8 @@ class DashboardScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).pushNamed(NewScreensRoutes.oc200),
-        child: const Icon(Icons.router),
         tooltip: 'OC200 Login',
+        child: const Icon(Icons.router),
       ),
     );
   }
@@ -239,7 +239,7 @@ class DashboardScreen extends StatelessWidget {
 // ---------------------------
 
 class RechargeScreen extends StatefulWidget {
-  const RechargeScreen({Key? key}) : super(key: key);
+  const RechargeScreen({super.key});
 
   @override
   State<RechargeScreen> createState() => _RechargeScreenState();
@@ -279,7 +279,7 @@ class _RechargeScreenState extends State<RechargeScreen> {
 // ---------------------------
 
 class PlansScreen extends StatelessWidget {
-  const PlansScreen({Key? key}) : super(key: key);
+  const PlansScreen({super.key});
 
   void _buyPlan(BuildContext context, String plan) async {
     // In production: create order on server (Razorpay) and open checkout
@@ -323,7 +323,7 @@ class PlansScreen extends StatelessWidget {
 // ---------------------------
 
 class LiveMediaScreen extends StatefulWidget {
-  const LiveMediaScreen({Key? key}) : super(key: key);
+  const LiveMediaScreen({super.key});
 
   @override
   State<LiveMediaScreen> createState() => _LiveMediaScreenState();
@@ -372,7 +372,7 @@ class _LiveMediaScreenState extends State<LiveMediaScreen> {
 // ---------------------------
 
 class Oc200LoginScreen extends StatefulWidget {
-  const Oc200LoginScreen({Key? key}) : super(key: key);
+  const Oc200LoginScreen({super.key});
 
   @override
   State<Oc200LoginScreen> createState() => _Oc200LoginScreenState();

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "878377640142",
+    "project_id": "mangalamwifi",
+    "storage_bucket": "mangalamwifi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878377640142:android:98e72cc13bac501086309f",
+        "android_client_info": {
+          "package_name": "com.example.mangalam_wifi_zone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7nl4cMbrI_GlfMWzameZMcLnr0W8G4bE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878377640142:android:2b1bff8d21c90e9a86309f",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7nl4cMbrI_GlfMWzameZMcLnr0W8G4bE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

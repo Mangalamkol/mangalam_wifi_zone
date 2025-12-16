@@ -1,23 +1,13 @@
-
 # Flutter
-build/
-.dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
+.packages
+.dart_tool/
+build/
 
-# IDE files
+# IDE specific
 .idea/
 .vscode/
 
-# Other
-*.iml
-*.hprof
-*.log
-*.pid
-*.seed
-*.sublime-project
-*.sublime-workspace
-
-# Server
-server/data/
-server/node_modules/
+# Local database files
+server/
