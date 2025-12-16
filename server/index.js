@@ -10,6 +10,7 @@ app.use(cors());
 // ROUTES
 app.use("/api/auth", require("./routes/authRoutes"));
 
+// Health check endpoint
 app.get('/', (req, res) => {
   res.status(200).send('Mangalam WiFi Zone Backend is running');
 });
