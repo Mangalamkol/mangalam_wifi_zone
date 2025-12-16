@@ -1,47 +1,8 @@
-
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.buildlog/
-.history
-.svn/
-
-# Flutter/Dart
-.dart_tool/
-.idea/
-.packages
-.project
-.build/
-build/
-*.iml
-
-# Android
-.gradle/
-app/src/main/assets/
-app/build/
-apk/
-/android/app/build/
-/android/build/
-/android/.gradle/
-*.jks
-*.keystore
-
-# iOS
-.ios/
-/ios/build/
-/ios/.symlinks/
-/ios/Pods/
-/ios/Flutter/App.framework
-/ios/Flutter/engine
-/ios/Flutter/flutter_assets
-*.mobileprovision
-
-# Web
-/client/node_modules/
-
-# Server
-/server/data/
+functions/
+automation/
+render_*.sh
+build_all.sh
+deploy.sh
+server/
+web_client/
+firebase.json

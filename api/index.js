@@ -20,7 +20,7 @@ mongoose.connect(MONGO_URI)
 
 // API Routes
 app.get('/', (req, res) => {
-  res.send('Mangalam WiFi API is running...');
+  res.send('Mangalam WiFi Zone Backend is running');
 });
 
 app.post('/api/omada/login', omadaLogin);
