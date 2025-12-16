@@ -12,6 +12,14 @@ const transactionRoutes = require('./transactions');
 const whatsappRoutes = require('./whatsappRoutes');
 const oc200Routes = require('./oc200Routes');
 
+apiRouter.get('/', (req, res) => {
+  res.json({
+    status: 'OK',
+    service: 'Mangalam WiFi Zone API',
+    time: new Date()
+  });
+});
+
 apiRouter.use('/auth', authRoutes);
 apiRouter.use('/plans', planRoutes);
 apiRouter.use('/coupons', couponRoutes);

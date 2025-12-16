@@ -22,12 +22,12 @@ mongoose.connect(process.env.MONGO_URI, {
 // API Routes
 app.use('/api', routes);
 
-// Serve static assets
-app.use(express.static(path.join(__dirname, '..', 'web_client', 'dist')));
+// ❌ এই অংশগুলো আপাতত বন্ধ রাখুন
+// app.use(express.static(path.join(__dirname, '..', 'web_client', 'dist')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'web_client', 'dist', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '..', 'web_client', 'dist', 'index.html'));
+// });
 
 const PORT = process.env.PORT || 5000;
 
