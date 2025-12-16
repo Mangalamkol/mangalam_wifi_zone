@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const routes = require('./routes');
+const healthRoute = require('./routes/health');
 
 const app = express();
 
@@ -21,6 +22,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // API Routes
 app.use('/api', routes);
+app.use('/api/health', healthRoute);
 
 const PORT = process.env.PORT || 5000;
 
