@@ -4,7 +4,8 @@ services:
     env: node
     plan: free
     region: oregon
-    startCommand: node health-check.js
+    buildCommand: npm run install:all && npm run build
+    startCommand: npm run start
     branch: main
     autoDeploy: true
     envVars:
@@ -20,7 +21,7 @@ services:
         sync: false
       - key: OC200_BASE_URL
         sync: false
-      - key: OC200_USER
+      - key_OC200_USER
         sync: false
       - key: OC200_PASS
         sync: false
