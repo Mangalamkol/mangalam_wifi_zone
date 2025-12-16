@@ -11,7 +11,7 @@ app.use(cors());
 app.use("/api/auth", require("./routes/authRoutes"));
 
 app.get('/', (req, res) => {
-  res.status(200).send('OK');
+  res.status(200).send('Mangalam WiFi Zone Backend is running');
 });
 
 const PORT = process.env.PORT || 5000;
