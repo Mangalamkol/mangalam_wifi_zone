@@ -1,13 +1,47 @@
-# Flutter
-.flutter-plugins
-.flutter-plugins-dependencies
-.packages
+
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# Flutter/Dart
 .dart_tool/
-build/
-
-# IDE specific
 .idea/
-.vscode/
+.packages
+.project
+.build/
+build/
+*.iml
 
-# Local database files
-server/
+# Android
+.gradle/
+app/src/main/assets/
+app/build/
+apk/
+/android/app/build/
+/android/build/
+/android/.gradle/
+*.jks
+*.keystore
+
+# iOS
+.ios/
+/ios/build/
+/ios/.symlinks/
+/ios/Pods/
+/ios/Flutter/App.framework
+/ios/Flutter/engine
+/ios/Flutter/flutter_assets
+*.mobileprovision
+
+# Web
+/client/node_modules/
+
+# Server
+/server/data/
