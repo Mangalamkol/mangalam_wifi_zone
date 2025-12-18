@@ -1,18 +1,18 @@
 // server/controllers/razorpayController.js
-const Razorpay = require('razorpay');
-const crypto = require('crypto');
-const Transaction = require('../models/Transaction');
-const Coupon = require('../models/Coupon');
-const Plan = require('../models/Plan');
-const { createVoucher } = require('../services/oc200Service');
-const { notifyUser } = require('../services/notificationService');
+import Razorpay from 'razorpay';
+import crypto from 'crypto';
+import Transaction from '../models/Transaction.js';
+import Coupon from '../models/Coupon.js';
+import Plan from '../models/Plan.js';
+import { createVoucher } from '../services/oc200Service.js';
+import { notifyUser } from '../services/notificationService.js';
 
 const rz = new Razorpay({
   key_id: process.env.RAZORPAY_KEY,
   key_secret: process.env.RAZORPAY_SECRET,
 });
 
-exports.createOrder = async (req, res) => {
+const createOrder = async (req, res) => {
   try {
     const { amount, currency = 'INR', receipt, planId, phone } = req.body;
     const order = await rz.orders.create({ amount: Math.round(amount), currency, receipt, notes: { planId, phone } });
@@ -22,7 +22,7 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-exports.verifyPayment = async (req, res) => {
+const verifyPayment = async (req, res) => {
   const { order_id, payment_id, signature } = req.body;
   const hmac = crypto.createHmac('sha256', process.env.RAZORPAY_SECRET);
   hmac.update(order_id + '|' + payment_id);
@@ -86,7 +86,7 @@ exports.verifyPayment = async (req, res) => {
   }
 };
 
-exports.refundPayment = async (req, res) => {
+const refundPayment = async (req, res) => {
     // Placeholder for refund logic
     try {
         const { payment_id, amount } = req.body;
@@ -98,7 +98,7 @@ exports.refundPayment = async (req, res) => {
     }
 };
 
-exports.webhookHandler = async (req, res) => {
+const webhookHandler = async (req, res) => {
   try {
     const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
     const signature = req.headers['x-razorpay-signature'];
@@ -178,3 +178,5 @@ exports.webhookHandler = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+export default { createOrder, verifyPayment, refundPayment, webhookHandler };

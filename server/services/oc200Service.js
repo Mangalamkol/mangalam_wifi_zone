@@ -1,4 +1,4 @@
-const Coupon = require('../models/Coupon');
+import Coupon from '../models/Coupon.js';
 
 const getCouponDetailsByTransactionId = async (transactionId) => {
     const coupon = await Coupon.findOne({ transactionId });
@@ -12,7 +12,7 @@ const getCouponDetailsByTransactionId = async (transactionId) => {
     };
 };
 
-const createCoupon = async (coupon) => {
+const createVoucher = async (coupon) => {
     // In a real scenario, this function would interact with the OC200 device/API
     // For now, we will just log that the coupon is being "created"
     console.log(`Creating coupon on OC200 with code: ${coupon.code}`);
@@ -20,7 +20,7 @@ const createCoupon = async (coupon) => {
     return { success: true, couponId: `oc200-${coupon._id}` };
 };
 
-module.exports = {
+export {
     getCouponDetailsByTransactionId,
-    createCoupon,
+    createVoucher,
 };

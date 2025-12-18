@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const notificationLogSchema = new mongoose.Schema({
   phone: {
@@ -30,4 +30,4 @@ const NotificationLog = mongoose.model(
   notificationLogSchema
 );
 
-module.exports = NotificationLog;
+export default NotificationLog;

@@ -6,6 +6,33 @@ const ALLOWED_TEMPLATES = [
   "help_transaction_request_v1"
 ];
 
+export async function sendWhatsApp(phone, message) {
+  try {
+    const response = await axios({
+      method: 'POST',
+      url: `https://graph.facebook.com/v15.0/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
+      headers: {
+        'Authorization': `Bearer ${process.env.WHATSAPP_API_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      data: {
+        messaging_product: 'whatsapp',
+        to: phone,
+        type: 'text',
+        text: {
+          body: message
+        }
+      }
+    });
+
+    console.log('WhatsApp message sent:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error sending WhatsApp message:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+}
+
 export async function sendWhatsAppTemplate({ phone, templateName, languageCode, variables }) {
   if (!ALLOWED_TEMPLATES.includes(templateName)) {
     const error = new Error("Template not approved for LIVE use");

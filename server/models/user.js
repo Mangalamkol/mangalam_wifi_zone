@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const userSchema = new mongoose.Schema({
   phone: { type: String, required: true, unique: true, index: true },
@@ -29,4 +29,4 @@ userSchema.methods.generateJwt = function () {
   );
 };
 
-module.exports = mongoose.models.User || mongoose.model('User', userSchema);
+export default mongoose.models.User || mongoose.model('User', userSchema);

@@ -2,7 +2,7 @@ import Coupon from '../models/Coupon.js';
 import Transaction from '../models/Transaction.js';
 import Plan from '../models/Plan.js';
 
-export const recoverCoupon = async (req, res) => {
+const recoverCoupon = async (req, res) => {
   try {
     const { payment_id } = req.body;
     if (!payment_id) {
@@ -37,3 +37,5 @@ export const recoverCoupon = async (req, res) => {
     res.status(500).json({ message: 'An error occurred while recovering the coupon.' });
   }
 };
+
+export default { recoverCoupon };

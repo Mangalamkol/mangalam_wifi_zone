@@ -4,7 +4,7 @@ import { sendWhatsApp } from "../services/whatsappService.js";
 import Coupon from "../models/Coupon.js";
 import whatsappController from '../controllers/whatsappController.js';
 import { auth } from '../middleware/authMiddleware.js';
-import { whatsappGuard } from "../middleware/featureGuards.js";
+import { whatsappGuard } from "../middleware/adminFeatureGuard.js";
 
 // Verification (Meta)
 router.get("/", (req, res) => {

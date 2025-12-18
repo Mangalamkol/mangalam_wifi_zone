@@ -1,30 +1,52 @@
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
+import fs from 'fs';
+import path from 'path';
 
-exports.adminLogin = async (req, res, next) => {
-  const { email, password } = req.body;
+const configPath = path.resolve(process.cwd(), 'server', 'config', 'adminLiveConfig.js');
 
-  try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" });
+const getAdminConfig = () => {
+    const configContent = fs.readFileSync(configPath, 'utf8');
+    const adminConfig = {};
+    const regex = /(\w+)\s*:\s*(true|false)/g;
+    let match;
+    while ((match = regex.exec(configContent)) !== null) {
+        adminConfig[match[1]] = match[2] === 'true';
     }
+    return adminConfig;
+}
 
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid credentials" });
+const writeAdminConfig = (newConfig) => {
+    let configContent = fs.readFileSync(configPath, 'utf8');
+    for (const key in newConfig) {
+        if (Object.hasOwnProperty.call(newConfig, key)) {
+            const value = newConfig[key];
+            const regex = new RegExp(`(${key}\s*:\s*)(true|false)`);
+            if (regex.test(configContent)) {
+                configContent = configContent.replace(regex, `$1${value}`);
+            }
+        }
     }
+    fs.writeFileSync(configPath, configContent, 'utf8');
+}
 
-    if (user.role !== 'admin') {
-      return res.status(403).json({ message: "Forbidden: not an admin" });
+
+export const getStatus = (req, res) => {
+    try {
+        const adminConfig = getAdminConfig();
+        res.status(200).json(adminConfig);
+    } catch (e) {
+        res.status(500).send('Error reading admin config');
     }
+};
 
-    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
-      expiresIn: '1h',
-    });
-
-    res.json({ token });
-  } catch (err) {
-    next(err);
-  }
+export const updateStatus = (req, res) => {
+    try {
+        const adminConfig = getAdminConfig();
+        const updates = req.body;
+        const newConfig = { ...adminConfig, ...updates };
+        writeAdminConfig(newConfig);
+        res.status(200).json({ message: 'Admin status updated successfully.', newConfig });
+    } catch (e) {
+        console.error(e);
+        res.status(500).send('Error updating admin config');
+    }
 };
