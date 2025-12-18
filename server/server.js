@@ -5,6 +5,9 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import path from 'path';
 import routes from './routes/index.routes.js';
+import healthRoutes from './routes/health.js';
+import killSwitchGuard from './middleware/killSwitchGuard.js';
+import './cron/backup.js'; // Import the cron job
 
 // 🔒 LIVE MODE LOCK
 if (process.env.NODE_ENV !== "production") {
@@ -22,6 +25,7 @@ if (process.env.NODE_ENV === "production") {
 // Middleware
 app.use(express.json());
 app.use(cors());
+app.use(killSwitchGuard);
 
 // DB Connect
 mongoose.connect(process.env.MONGO_URI, {
@@ -32,6 +36,7 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => console.log(err));
 
 // API Routes
+app.use('/api/health', healthRoutes);
 app.use('/api', routes);
 
 const PORT = process.env.PORT || 5002;

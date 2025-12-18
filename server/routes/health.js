@@ -1,13 +1,10 @@
 import express from 'express';
-import planRoutes from './plan.routes.js';
 import KILL from '../config/killSwitch.js';
 
 const router = express.Router();
 
-router.use('/plans', planRoutes);
-
 // 🩺 HEALTH CHECK API
-router.get("/health", (req, res) => {
+router.get("/", (req, res) => {
   res.json({
     status: KILL.SYSTEM_ENABLED ? "LIVE" : "DOWN",
     payment: KILL.PAYMENT_ENABLED ? "LIVE" : "DOWN",

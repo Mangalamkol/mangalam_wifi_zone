@@ -1,12 +1,13 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const Plan = require('../models/plan');
-const Coupon = require('../models/coupon');
-const { razorpay } = require('../utils/razorpay');
-const razorpayGuard = require("../middleware/razorpayGuard");
+import Plan from '../models/plan.js';
+import Coupon from '../models/coupon.js';
+import { razorpay } from '../utils/razorpay.js';
+import razorpayGuard from "../middleware/razorpayGuard.js";
+import { paymentGuard } from "../middleware/featureGuards.js";
 
 // Create a Razorpay order
-router.post('/order', razorpayGuard, async (req, res) => {
+router.post('/order', paymentGuard, razorpayGuard, async (req, res) => {
   const { planId, couponCode } = req.body;
   try {
     const plan = await Plan.findById(planId);
@@ -43,4 +44,4 @@ router.post('/verify', async (req, res) => {
   res.json({ message: 'Payment verified (TODO)' });
 });
 
-module.exports = router;
+export default router;

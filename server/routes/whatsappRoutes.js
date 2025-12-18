@@ -4,6 +4,7 @@ import { sendWhatsApp } from "../services/whatsappService.js";
 import Coupon from "../models/Coupon.js";
 import whatsappController from '../controllers/whatsappController.js';
 import { auth } from '../middleware/authMiddleware.js';
+import { whatsappGuard } from "../middleware/featureGuards.js";
 
 // Verification (Meta)
 router.get("/", (req, res) => {
@@ -50,6 +51,22 @@ router.post("/", async (req, res) => {
     res.sendStatus(200);
   } catch (e) {
     res.sendStatus(200);
+  }
+});
+
+router.post("/send", whatsappGuard, async (req, res) => {
+  const { to, text } = req.body;
+
+  if (!to || !text) {
+    return res.status(400).json({ error: "Missing 'to' or 'text' in the request body." });
+  }
+
+  try {
+    await sendWhatsApp(to, text);
+    res.status(200).json({ success: true, message: "Message sent." });
+  } catch (error) {
+    console.error("Failed to send WhatsApp message:", error);
+    res.status(500).json({ error: "Internal server error." });
   }
 });
 
