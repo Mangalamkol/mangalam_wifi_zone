@@ -1,3 +1,9 @@
+if (global.__serverStarted) {
+  console.log("SERVER ALREADY RUNNING – EXIT");
+  process.exit(0);
+}
+global.__serverStarted = true;
+
 import express from "express";
 import adminControl from "./routes/adminControl.js";
 import { systemGuard } from "./middleware/adminFeatureGuard.js";
