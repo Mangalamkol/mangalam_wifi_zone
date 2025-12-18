@@ -3,9 +3,10 @@ const router = express.Router();
 const Plan = require('../models/plan');
 const Coupon = require('../models/coupon');
 const { razorpay } = require('../utils/razorpay');
+const razorpayGuard = require("../middleware/razorpayGuard");
 
 // Create a Razorpay order
-router.post('/order', async (req, res) => {
+router.post('/order', razorpayGuard, async (req, res) => {
   const { planId, couponCode } = req.body;
   try {
     const plan = await Plan.findById(planId);

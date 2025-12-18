@@ -56,7 +56,7 @@ export const sendCouponToPhone = asyncHandler(async (req, res) => {
   const { phone, couponCode, validity, languageCode = 'bn' } = req.body;
   await sendWhatsAppTemplate({
     phone,
-    templateName: 'coupon_delivery_v2',
+    templateName: 'coupon_delivery_v1',
     languageCode,
     variables: [couponCode, validity],
   });

@@ -6,7 +6,18 @@ import cors from 'cors';
 import path from 'path';
 import routes from './routes/index.routes.js';
 
+// 🔒 LIVE MODE LOCK
+if (process.env.NODE_ENV !== "production") {
+  console.log("⚠️ WARNING: Not in production");
+}
+
+console.log("🚀 Mangalam WiFi Zone is LIVE & OPERATIONAL");
+
 const app = express();
+
+if (process.env.NODE_ENV === "production") {
+  app.disable("x-powered-by");
+}
 
 // Middleware
 app.use(express.json());
