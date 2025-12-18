@@ -6,7 +6,7 @@ const router = express.Router();
 
 // 🔧 STATUS
 router.get("/status", adminAuth, (req, res) => {
-  res.json({ admin: "OK", live: true });
+  res.json(ADMIN);
 });
 
 // 🔧 UPDATE

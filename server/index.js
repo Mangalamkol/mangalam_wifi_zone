@@ -1,5 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
 import express from "express";
 import adminControl from "./routes/adminControl.js";
 import { systemGuard } from "./middleware/adminFeatureGuard.js";
