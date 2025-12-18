@@ -17,6 +17,29 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "OK", service: "Mangalam WiFi Zone" });
 });
 
+app.get("/", (req, res) => {
+  res.status(200).send(`
+    <html>
+      <head>
+        <title>Mangalam WiFi Zone</title>
+      </head>
+      <body style="font-family:sans-serif">
+        <h2>Mangalam WiFi Zone – LIVE</h2>
+        <ul>
+          <li>Status: OK</li>
+          <li>Backend: Active</li>
+          <li>
+            Web Client:
+            <a href="https://mangalamwifi.web.app" target="_blank">
+              Open
+            </a>
+          </li>
+        </ul>
+      </body>
+    </html>
+  `);
+});
+
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log("SERVER RUNNING ON PORT", PORT);
