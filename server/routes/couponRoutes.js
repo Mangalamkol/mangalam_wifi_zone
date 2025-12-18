@@ -1,15 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const couponController = require('../controllers/couponController');
-const { auth, requireAdmin } = require('../middleware/authMiddleware');
+import couponController from '../controllers/couponController.js';
 
-// All routes are protected and require admin access
-router.use(auth, requireAdmin);
+router.post('/recover', couponController.recoverCoupon);
 
-router.post('/', couponController.create);
-router.get('/', couponController.getAll);
-router.get('/:id', couponController.getById);
-router.patch('/:id', couponController.update);
-router.delete('/:id', couponController.delete);
-
-module.exports = router;
+export default router;

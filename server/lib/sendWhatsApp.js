@@ -1,36 +1,20 @@
-const axios = require('axios');
+import axios from "axios";
 
-async function sendWhatsApp(phone, message) {
-  const accessToken = process.env.WHATSAPP_ACCESS_TOKEN;
-  const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+const GRAPH_URL = "https://graph.facebook.com/v19.0";
 
-  if (!accessToken || !phoneNumberId) {
-    throw new Error('WhatsApp access token or phone number ID is not configured.');
-  }
-
-  const url = `https://graph.facebook.com/v19.0/${phoneNumberId}/messages`;
-
-  const data = {
-    messaging_product: 'whatsapp',
-    to: phone,
-    type: 'text',
-    text: {
-      body: message,
-    },
-  };
-
+export async function sendWhatsApp(to, text) {
+  const url = `${GRAPH_URL}/${process.env.WHATSAPP_PHONE_ID}/messages`;
   const headers = {
-    'Authorization': `Bearer ${accessToken}`,
-    'Content-Type': 'application/json',
+    Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
+    "Content-Type": "application/json",
   };
 
-  try {
-    const response = await axios.post(url, data, { headers });
-    return response.data;
-  } catch (error) {
-    console.error('Failed to send WhatsApp message:', error.response ? error.response.data : error.message);
-    throw new Error('Failed to send WhatsApp message.');
-  }
-}
+  const payload = {
+    messaging_product: "whatsapp",
+    to,
+    type: "text",
+    text: { body: text },
+  };
 
-module.exports = sendWhatsApp;
+  await axios.post(url, payload, { headers });
+}

@@ -54,4 +54,18 @@ class OmadaApi {
       body: jsonEncode({"name": code}),
     );
   }
+
+  /// 🧾 Get Coupon by Transaction ID
+  Future<Map<String, dynamic>> getCouponByTransactionId(String transactionId) async {
+    final res = await http.get(
+      Uri.parse('${session.baseUrl}/api/coupons/by-transaction/$transactionId'),
+      headers: session.headers,
+    );
+
+    if (res.statusCode != 200) {
+      throw Exception('Failed to get coupon');
+    }
+
+    return jsonDecode(res.body);
+  }
 }

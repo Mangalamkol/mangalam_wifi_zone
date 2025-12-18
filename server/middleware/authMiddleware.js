@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/user'); // adjust path
+import jwt from 'jsonwebtoken';
+import User from '../models/user.js'; // adjust path
 
-exports.auth = async (req, res, next) => {
+export const auth = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(' ')[1] || req.body.token;
     if (!token) return res.status(401).json({ message: 'No token' });
@@ -15,7 +15,7 @@ exports.auth = async (req, res, next) => {
   }
 };
 
-exports.requireAdmin = (req, res, next) => {
+export const requireAdmin = (req, res, next) => {
   if (!req.user || !req.user.isAdmin) return res.status(403).json({ message: 'Admin only' });
   next();
 };

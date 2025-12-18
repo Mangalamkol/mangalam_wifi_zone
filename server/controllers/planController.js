@@ -1,36 +1,27 @@
-// server/controllers/planController.js
-const Plan = require('../models/Plan');
+import Plan from '../models/Plan.js';
 
-exports.listPlans = async (req, res) => {
-  const plans = await Plan.find({ visible: true }).sort({ price: 1 });
-  res.json(plans);
+// @desc    Get all plans
+// @route   GET /api/plans
+// @access  Public
+export const getPlans = async (req, res) => {
+  try {
+    const plans = await Plan.find({ active: true }).sort({ price: 1 });
+    res.json(plans);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 };
 
-exports.getPlan = async (req, res) => {
-  const plan = await Plan.findById(req.params.id);
-  if (!plan) return res.status(404).json({ message: 'Not found' });
-  res.json(plan);
-};
-
-exports.createPlan = async (req, res) => {
+// @desc    Create a plan
+// @route   POST /api/plans
+// @access  Admin
+export const createPlan = async (req, res) => {
   try {
     const plan = await Plan.create(req.body);
     res.json(plan);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
-};
-
-exports.updatePlan = async (req, res) => {
-  try {
-    const plan = await Plan.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(plan);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-};
-
-exports.deletePlan = async (req, res) => {
-  await Plan.findByIdAndDelete(req.params.id);
-  res.json({ ok: true });
 };

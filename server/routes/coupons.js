@@ -1,21 +1,18 @@
-const express = require('express');
-const router = express.Router();
-const {
-  uploadCoupons,
-  getAvailableCoupons,
-  verifyCoupon,
-  assignCoupon,
-  disableExpired
-} = require('../controllers/couponController');
+const router = require('express').Router();
+const Coupon = require('../models/Coupon');
 
-const requireAdmin = require('../middleware/requireAdmin');
+// Assign one unused coupon for a plan
+router.post('/assign', async (req, res) => {
+  const { planId } = req.body;
 
-router.post('/upload', requireAdmin, uploadCoupons);
-router.get('/available/:planId', getAvailableCoupons);
-router.post('/verify', verifyCoupon);
-router.post('/assign', assignCoupon);
+  const coupon = await Coupon.findOneAndUpdate(
+    { planId, used: false },
+    { used: true, assignedAt: new Date() },
+    { new: true }
+  );
 
-// internal cron usage — protected
-router.post('/disable-expired', requireAdmin, disableExpired);
+  if (!coupon) return res.status(404).json({ message: 'No coupons available' });
+  res.json(coupon);
+});
 
 module.exports = router;

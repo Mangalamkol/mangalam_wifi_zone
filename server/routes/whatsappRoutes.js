@@ -1,16 +1,61 @@
-// server/routes/whatsappRoutes.js
-const express = require('express');
+import express from "express";
 const router = express.Router();
-const whatsappController = require('../controllers/whatsappController');
-const { auth } = require('../middleware/authMiddleware');
+import { sendWhatsApp } from "../services/whatsappService.js";
+import Coupon from "../models/Coupon.js";
+import whatsappController from '../controllers/whatsappController.js';
+import { auth } from '../middleware/authMiddleware.js';
 
-// Webhook verification
-router.get('/webhook', whatsappController.verifyWebhook);
+// Verification (Meta)
+router.get("/", (req, res) => {
+  const mode = req.query["hub.mode"];
+  const token = req.query["hub.verify_token"];
+  const challenge = req.query["hub.challenge"];
 
-// Webhook for incoming whatsapp messages (if used)
-router.post('/webhook', whatsappController.incomingWebhook);
+  if (mode === "subscribe" && token === process.env.META_VERIFY_TOKEN) {
+    return res.status(200).send(challenge);
+  }
+  return res.sendStatus(403);
+});
+
+// Incoming Messages
+router.post("/", async (req, res) => {
+  try {
+    const msg =
+      req.body?.entry?.[0]?.changes?.[0]?.value?.messages?.[0];
+    if (!msg) return res.sendStatus(200);
+
+    const from = msg.from; // user phone
+    const text = msg.text?.body?.trim();
+
+    // Help / Recovery by Transaction ID
+    if (text?.toUpperCase().startsWith("TXN")) {
+      const coupon = await Coupon.findOne({ transactionId: text });
+      if (!coupon) {
+        await sendWhatsApp(from, "❌ Transaction ID পাওয়া যায়নি।");
+      } else {
+        await sendWhatsApp(
+          from,
+          `✅ আপনার কুপন:\n${coupon.code}\n⏰ Expiry: ${new Date(
+            coupon.expiresAt
+          ).toLocaleString()}`
+        );
+      }
+    } else {
+      await sendWhatsApp(
+        from,
+        "ℹ️ কুপন পেতে আপনার Transaction ID পাঠান (উদাহরণ: TXN123...)"
+      );
+    }
+
+    res.sendStatus(200);
+  } catch (e) {
+    res.sendStatus(200);
+  }
+});
 
 // send coupon via whatsapp after purchase (server triggered)
 router.post('/send-coupon', auth, whatsappController.sendCouponToPhone);
 
-module.exports = router;
+router.post('/send-otp', auth, whatsappController.sendOtp);
+
+export default router;

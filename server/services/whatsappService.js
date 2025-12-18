@@ -1,28 +1,37 @@
-const axios = require('axios');
+import axios from 'axios';
 
-const WHATSAPP_API_TOKEN = process.env.WHATSAPP_API_TOKEN;
-const WHATSAPP_PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID;
-
-const whatsappService = axios.create({
-  baseURL: `https://graph.facebook.com/v15.0/${WHATSAPP_PHONE_NUMBER_ID}`,
-  headers: {
-    'Authorization': `Bearer ${WHATSAPP_API_TOKEN}`,
-    'Content-Type': 'application/json',
-  },
-});
-
-const sendTextMessage = async (to, text) => {
+export async function sendWhatsAppTemplate({ phone, templateName, languageCode, variables }) {
   try {
-    await whatsappService.post('/messages', {
-      messaging_product: 'whatsapp',
-      to,
-      text: { body: text },
+    const component = variables && variables.length > 0 ? [{
+      type: 'body',
+      parameters: variables.map(value => ({ type: 'text', text: value.toString() }))
+    }] : [];
+
+    const response = await axios({
+      method: 'POST',
+      url: `https://graph.facebook.com/v15.0/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
+      headers: {
+        'Authorization': `Bearer ${process.env.WHATSAPP_API_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      data: {
+        messaging_product: 'whatsapp',
+        to: phone,
+        type: 'template',
+        template: {
+          name: templateName,
+          language: {
+            code: languageCode
+          },
+          components: component
+        }
+      }
     });
+
+    console.log('WhatsApp template message sent:', response.data);
+    return response.data;
   } catch (error) {
-    console.error('Error sending WhatsApp message:', error.response?.data || error.message);
-    // Re-throw the error to be handled by the caller
+    console.error('Error sending WhatsApp template message:', error.response ? error.response.data : error.message);
     throw error;
   }
-};
-
-module.exports = { sendTextMessage };
+}

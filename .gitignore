@@ -1,8 +1,13 @@
-functions/
-automation/
-render_*.sh
-build_all.sh
-deploy.sh
-server/
-web_client/
-firebase.json
+# Dependencies
+/node_modules
+
+# Production
+.env.production
+
+# Development
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mangalam_wifi_zone/router.dart';
+import 'package:mangalam_wifi_zone/screens/home_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -17,15 +19,8 @@ class MangalamWifiApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Text(
-            'Mangalam WiFi Zone\nFoundation Ready',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
-      ),
+      onGenerateRoute: AppRouter.generateRoute,
+      home: HomeScreen(),
     );
   }
 }

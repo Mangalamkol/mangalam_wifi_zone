@@ -1,0 +1,10 @@
+{
+  "payment_button": "এখন পরিশোধ করুন",
+  "confirm_payment_title": "পেমেন্ট নিশ্চিত করুন",
+  "confirm_payment_message": "আপনি কি নিশ্চিত যে আপনি {amount} পরিশোধ করতে চান?",
+  "processing_payment": "আপনার পেমেন্ট প্রক্রিয়া করা হচ্ছে...",
+  "payment_successful_title": "পেমেন্ট সফল",
+  "payment_successful_message": "আপনার পেমেন্ট সফল হয়েছে!",
+  "payment_failed_title": "পেমেন্ট ব্যর্থ",
+  "payment_failed_message": "পেমেন্ট ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।"
+}

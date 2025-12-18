@@ -69,6 +69,18 @@ const apiRequest = async (method, url, data = null) => {
 
 // --- High-Level API Methods ---
 
+const createVoucher = async (couponCode, plan) => {
+  // Assuming the plan object has properties like duration, speed, etc.
+  // The payload will depend on the OC200 API's requirements for voucher creation
+  const voucherData = {
+    code: couponCode,
+    duration: plan.duration, // e.g., 24 (hours)
+    speed: plan.speed, // e.g., 1024 (kbps)
+    // add other necessary plan details here
+  };
+  return await apiRequest('post', '/create-voucher', voucherData);
+};
+
 const getAccessPoints = async () => {
   return await apiRequest('get', '/aps');
 };
@@ -97,6 +109,7 @@ const getApLoadInfo = async () => {
 module.exports = {
   login,
   logout,
+  createVoucher,
   getAccessPoints,
   getActiveSessions,
   disconnectClient,

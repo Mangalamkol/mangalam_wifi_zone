@@ -1,47 +1,39 @@
-const Coupon = require('../models/Coupon');
+import Coupon from '../models/Coupon.js';
+import Transaction from '../models/Transaction.js';
+import Plan from '../models/Plan.js';
 
-exports.create = async (req, res) => {
-    try {
-        const coupon = new Coupon(req.body);
-        await coupon.save();
-        res.json({ success: true, coupon });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+export const recoverCoupon = async (req, res) => {
+  try {
+    const { payment_id } = req.body;
+    if (!payment_id) {
+      return res.status(400).json({ message: 'Payment ID is required' });
     }
-};
 
-exports.getAll = async (req, res) => {
-    try {
-        const coupons = await Coupon.find();
-        res.json({ success: true, coupons });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
-    }
-};
+    // Find the transaction associated with the payment ID
+    const transaction = await Transaction.findOne({
+      $or: [{ payment_id }, { razorpay_payment_id: payment_id }],
+    });
 
-exports.getById = async (req, res) => {
-    try {
-        const coupon = await Coupon.findById(req.params.id);
-        res.json({ success: true, coupon });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+    if (!transaction) {
+      return res.status(404).json({ message: 'Transaction not found.' });
     }
-};
 
-exports.update = async (req, res) => {
-    try {
-        const coupon = await Coupon.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.json({ success: true, coupon });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
-    }
-};
+    // Find the coupon using the transaction's internal ID
+    const coupon = await Coupon.findOne({ transactionId: transaction._id }).populate('planId');
 
-exports.delete = async (req, res) => {
-    try {
-        await Coupon.findByIdAndDelete(req.params.id);
-        res.json({ success: true });
-    } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+    if (!coupon) {
+      return res.status(404).json({ message: 'Coupon not found for this transaction.' });
     }
+
+    res.json({
+        code: coupon.code,
+        expiresAt: coupon.expiresAt,
+        planName: coupon.planId.name,
+        deviceLimit: coupon.planId.deviceLimit
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'An error occurred while recovering the coupon.' });
+  }
 };

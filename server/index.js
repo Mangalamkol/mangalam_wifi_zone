@@ -1,25 +1,45 @@
-const express = require("express");
-const cors = require("cors");
-require("dotenv").config();
-const mongoose = require("mongoose");
+import express from 'express';
+import mongoose from 'mongoose';
+import rateLimiter from './middleware/rateLimiter.js';
+import couponRoutes from './routes/couponRoutes.js';
+import checkoutRoutes from './routes/checkoutRoutes.js'; // Import the new checkout route
+import whatsappRoutes from './routes/whatsappRoutes.js'; // Import whatsapp routes
+import logger from './utils/logger.js';
+import dotenv from 'dotenv';
+
+if (process.env.NODE_ENV === 'production') {
+  dotenv.config({ path: '.env.production' });
+} else {
+  dotenv.config();
+}
+
 
 const app = express();
-app.use(express.json());
-app.use(cors());
+const PORT = process.env.PORT || 3000;
 
-// ROUTES
-app.use("/api/auth", require("./routes/authRoutes"));
+app.use(express.json());
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => logger.info('MongoDB connected'))
+  .catch(err => logger.error(err));
 
 // Health check endpoint
-app.get('/', (req, res) => {
-  res.status(200).send('Mangalam WiFi Zone Backend is running');
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'OK',
+    uptime: process.uptime(),
+    timestamp: new Date(),
+  });
 });
 
-const PORT = process.env.PORT || 5000;
+// Apply the rate limiting middleware to all routes starting with /api
+app.use('/api', rateLimiter);
 
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log("MongoDB Connected");
-        app.listen(PORT, () => console.log("Server running on port " + PORT));
-    })
-    .catch(err => console.error(err));
+app.use("/webhook/whatsapp", (await import('./routes/whatsappWebhook.js')).default);
+app.use('/api/whatsapp', whatsappRoutes);
+app.use('/api', checkoutRoutes); // Use the new checkout route with a /api prefix
+app.use('/api/coupons', couponRoutes);
+
+app.listen(PORT, () => {
+  logger.info(`Server is running on port ${PORT}`);
+});

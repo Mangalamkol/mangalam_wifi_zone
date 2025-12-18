@@ -1,0 +1,10 @@
+{
+  "payment_button": "अभी भुगतान करें",
+  "confirm_payment_title": "भुगतान की पुष्टि करें",
+  "confirm_payment_message": "क्या आप वाकई {amount} का भुगतान करना चाहते हैं?",
+  "processing_payment": "आपका भुगतान प्रोसेस हो रहा है...",
+  "payment_successful_title": "भुगतान सफल",
+  "payment_successful_message": "आपका भुगतान सफल रहा!",
+  "payment_failed_title": "भुगतान विफल",
+  "payment_failed_message": "भुगतान विफल हो गया। कृपया फिर से प्रयास करें।"
+}

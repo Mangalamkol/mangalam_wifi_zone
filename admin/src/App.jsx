@@ -4,9 +4,11 @@ import Dashboard from './pages/Dashboard';
 import OC200Sessions from './components/OC200Sessions';
 import APInfo from './components/APInfo';
 import APUserBreakdown from './APUserBreakdown';
+import Plans from './pages/Plans';
 
 export default function App() {
   const [logged, setLogged] = useState(false);
+  const [page, setPage] = useState('dashboard');
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token');
@@ -26,11 +28,20 @@ export default function App() {
 
   return (
     <div>
-      <button onClick={handleLogout} style={{ float: 'right', margin: 10 }}>Logout</button>
-      <Dashboard />
-      <OC200Sessions />
-      <APInfo />
-      <APUserBreakdown />
+      <nav>
+        <button onClick={() => setPage('dashboard')}>Dashboard</button>
+        <button onClick={() => setPage('plans')}>Plans</button>
+        <button onClick={handleLogout} style={{ float: 'right', margin: 10 }}>Logout</button>
+      </nav>
+      {page === 'dashboard' && (
+        <>
+          <Dashboard />
+          <OC200Sessions />
+          <APInfo />
+          <APUserBreakdown />
+        </>
+      )}
+      {page === 'plans' && <Plans />}
     </div>
   );
 }
