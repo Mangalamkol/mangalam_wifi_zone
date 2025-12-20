@@ -6,7 +6,7 @@ echo "1/4 Installing dependencies..."
 echo "2/4 Building client apps..."
 ./build_all.sh
 echo "3/4 Adding changes to git..."
-git add .
+git add dist server
 git commit -m "$MSG" || echo "No changes to commit"
 echo "4/4 Pushing to origin main..."
 git push origin main
