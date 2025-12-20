@@ -4,50 +4,25 @@ import Plan from '../models/Plan.js';
 // @route   GET /api/plans
 // @access  Public
 export const getPlans = async (req, res) => {
-  res.json([
-    {
-      id: "1h_10",
-      name: "1 Hour Unlimited",
-      durationHours: 1,
-      price: 10,
-      maxDevices: 1
-    },
-    {
-      id: "2h_20",
-      name: "2 Hours Unlimited",
-      durationHours: 2,
-      price: 20,
-      maxDevices: 1
-    },
-    {
-      id: "5h_30",
-      name: "5 Hours Unlimited",
-      durationHours: 5,
-      price: 30,
-      maxDevices: 1
-    },
-    {
-      id: "24h_50",
-      name: "24 Hours Unlimited",
-      durationHours: 24,
-      price: 50,
-      maxDevices: 1
-    },
-    {
-      id: "30d_100",
-      name: "30 Days Unlimited",
-      durationDays: 30,
-      price: 100,
-      maxDevices: 1
-    },
-    {
-      id: "30d_300_5d",
-      name: "30 Days Unlimited (5 Devices)",
-      durationDays: 30,
-      price: 300,
-      maxDevices: 5
-    }
-  ]);
+  try {
+    const plans = await Plan.find({});
+    const formattedPlans = plans.map(plan => {
+      const planObject = plan.toObject();
+      if (planObject.duration.hours) {
+        planObject.durationHours = planObject.duration.hours;
+      } else if (planObject.duration.days) {
+        planObject.durationDays = planObject.duration.days;
+      }
+      delete planObject.duration;
+      delete planObject._id;
+      delete planObject.__v;
+      return planObject;
+    });
+    res.json(formattedPlans);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 };
 
 // @desc    Create a plan
@@ -55,10 +30,34 @@ export const getPlans = async (req, res) => {
 // @access  Admin
 export const createPlan = async (req, res) => {
   try {
-    const plan = await Plan.create(req.body);
-    res.json(plan);
+    const { durationHours, durationDays, ...rest } = req.body;
+    const duration = {};
+    if (durationHours) {
+      duration.hours = durationHours;
+    } else if (durationDays) {
+      duration.days = durationDays;
+    }
+
+    const planData = { ...rest, duration };
+
+    const plan = await Plan.create(planData);
+
+    const planObject = plan.toObject();
+    if (planObject.duration.hours) {
+      planObject.durationHours = planObject.duration.hours;
+    } else if (planObject.duration.days) {
+      planObject.durationDays = planObject.duration.days;
+    }
+    delete planObject.duration;
+    delete planObject._id;
+    delete planObject.__v;
+
+    res.status(201).json(planObject);
   } catch (err) {
     console.error(err.message);
+    if (err.code === 11000) {
+      return res.status(400).json({ msg: 'Plan with this ID already exists' });
+    }
     res.status(500).send('Server Error');
   }
 };
