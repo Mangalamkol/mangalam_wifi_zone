@@ -1,41 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:mangalam_wifi_zone/router.dart';
+
+// Use a conditional import for web-specific functionality
+import 'home_screen_mobile.dart' if (dart.library.html) 'home_screen_web.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mangalam WiFi Zone'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, AppRouter.planSelectionRoute);
-              },
-              child: const Text('Buy a Plan'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, AppRouter.helpRoute);
-              },
-              child: const Text('Go to Help Screen'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, AppRouter.recoverCouponRoute);
-              },
-              child: const Text('Recover Coupon'),
-            ),
-          ],
-        ),
+    return const Scaffold(
+      body: SafeArea(
+        child: WebViewContainer(),
       ),
     );
   }

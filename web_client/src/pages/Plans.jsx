@@ -1,29 +1,19 @@
+import { useEffect, useState } from "react";
+import { fetchPlans } from "../api/plans";
+
 export default function Plans() {
+  const [plans, setPlans] = useState("Loading...");
+
+  useEffect(() => {
+    fetchPlans()
+      .then(d => setPlans(JSON.stringify(d, null, 2)))
+      .catch(e => setPlans("API ERROR: " + e.message));
+  }, []);
+
   return (
-    <div>
-      <h1>Our Plans</h1>
-      <p>Choose the plan that's right for you.</p>
-
-      <section>
-        <h2>Basic Plan</h2>
-        <p>Speed: 50 Mbps</p>
-        <p>Price: ₹499/month</p>
-        <p>Data: Unlimited</p>
-      </section>
-
-      <section>
-        <h2>Standard Plan</h2>
-        <p>Speed: 100 Mbps</p>
-        <p>Price: ₹799/month</p>
-        <p>Data: Unlimited</p>
-      </section>
-
-      <section>
-        <h2>Premium Plan</h2>
-        <p>Speed: 200 Mbps</p>
-        <p>Price: ₹999/month</p>
-        <p>Data: Unlimited</p>
-      </section>
+    <div style={{ padding: 40 }}>
+      <h1>Plans</h1>
+      <pre>{plans}</pre>
     </div>
   );
 }

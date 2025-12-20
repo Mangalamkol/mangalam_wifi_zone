@@ -338,6 +338,30 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "webview_flutter",
+      "rootUri": "file:///home/user/.pub-cache/hosted/pub.dev/webview_flutter-4.13.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "webview_flutter_android",
+      "rootUri": "file:///home/user/.pub-cache/hosted/pub.dev/webview_flutter_android-4.10.11",
+      "packageUri": "lib/",
+      "languageVersion": "3.9"
+    },
+    {
+      "name": "webview_flutter_platform_interface",
+      "rootUri": "file:///home/user/.pub-cache/hosted/pub.dev/webview_flutter_platform_interface-2.14.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "webview_flutter_wkwebview",
+      "rootUri": "file:///home/user/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.23.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.9"
+    },
+    {
       "name": "xdg_directories",
       "rootUri": "file:///home/user/.pub-cache/hosted/pub.dev/xdg_directories-1.1.0",
       "packageUri": "lib/",

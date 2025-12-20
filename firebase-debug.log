@@ -2,121 +2,102 @@
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[debug] [2025-12-18T16:33:43.347Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:33:43.347Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
-[debug] [2025-12-18T16:33:43.353Z] Checked if tokens are valid: false, expires at: 1766050010598
-[debug] [2025-12-18T16:33:43.353Z] Checked if tokens are valid: false, expires at: 1766050010598
-[debug] [2025-12-18T16:33:43.354Z] > refreshing access token with scopes: []
-[debug] [2025-12-18T16:33:43.356Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
-[debug] [2025-12-18T16:33:43.356Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-18T16:33:43.407Z] Checked if tokens are valid: false, expires at: 1766050010598
-[debug] [2025-12-18T16:33:43.407Z] Checked if tokens are valid: false, expires at: 1766050010598
-[debug] [2025-12-18T16:33:43.407Z] > refreshing access token with scopes: []
-[debug] [2025-12-18T16:33:43.408Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
-[debug] [2025-12-18T16:33:43.408Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-18T16:33:43.411Z] Checked if tokens are valid: false, expires at: 1766050010598
-[debug] [2025-12-18T16:33:43.411Z] Checked if tokens are valid: false, expires at: 1766050010598
-[debug] [2025-12-18T16:33:43.411Z] > refreshing access token with scopes: []
-[debug] [2025-12-18T16:33:43.411Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
-[debug] [2025-12-18T16:33:43.411Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-18T16:33:43.413Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:33:43.413Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
-[debug] [2025-12-18T16:33:43.414Z] Checked if tokens are valid: false, expires at: 1766050010598
-[debug] [2025-12-18T16:33:43.414Z] Checked if tokens are valid: false, expires at: 1766050010598
-[debug] [2025-12-18T16:33:43.414Z] > refreshing access token with scopes: []
-[debug] [2025-12-18T16:33:43.414Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
-[debug] [2025-12-18T16:33:43.414Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-18T16:33:43.418Z] Checked if tokens are valid: false, expires at: 1766050010598
-[debug] [2025-12-18T16:33:43.418Z] Checked if tokens are valid: false, expires at: 1766050010598
-[debug] [2025-12-18T16:33:43.418Z] > refreshing access token with scopes: []
-[debug] [2025-12-18T16:33:43.419Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
-[debug] [2025-12-18T16:33:43.419Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-18T16:33:43.420Z] Checked if tokens are valid: false, expires at: 1766050010598
-[debug] [2025-12-18T16:33:43.420Z] Checked if tokens are valid: false, expires at: 1766050010598
-[debug] [2025-12-18T16:33:43.420Z] > refreshing access token with scopes: []
-[debug] [2025-12-18T16:33:43.421Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
-[debug] [2025-12-18T16:33:43.421Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-18T16:33:43.536Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
-[debug] [2025-12-18T16:33:43.536Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-18T16:33:43.625Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com [none]
-[debug] [2025-12-18T16:33:43.625Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com x-goog-quota-user=projects/mangalamwifi
-[debug] [2025-12-18T16:33:43.679Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
-[debug] [2025-12-18T16:33:43.680Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-18T16:33:43.694Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com [none]
-[debug] [2025-12-18T16:33:43.694Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/mangalamwifi
-[debug] [2025-12-18T16:33:43.695Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
-[debug] [2025-12-18T16:33:43.695Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-18T16:33:43.702Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com [none]
-[debug] [2025-12-18T16:33:43.703Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com x-goog-quota-user=projects/mangalamwifi
-[debug] [2025-12-18T16:33:43.732Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
-[debug] [2025-12-18T16:33:43.732Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-18T16:33:43.776Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com [none]
-[debug] [2025-12-18T16:33:43.776Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com x-goog-quota-user=projects/mangalamwifi
-[debug] [2025-12-18T16:33:43.792Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
-[debug] [2025-12-18T16:33:43.792Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-18T16:33:43.837Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com [none]
-[debug] [2025-12-18T16:33:43.837Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com x-goog-quota-user=projects/mangalamwifi
-[debug] [2025-12-18T16:33:43.941Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
-[debug] [2025-12-18T16:33:43.941Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
-[debug] [2025-12-18T16:33:43.956Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com [none]
-[debug] [2025-12-18T16:33:43.956Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/mangalamwifi
-[debug] [2025-12-18T16:33:44.685Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com 200
-[debug] [2025-12-18T16:33:44.685Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com [omitted]
-[debug] [2025-12-18T16:33:44.763Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com 403
-[debug] [2025-12-18T16:33:44.763Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com [omitted]
-[debug] [2025-12-18T16:33:44.781Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com 200
-[debug] [2025-12-18T16:33:44.781Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com [omitted]
-[debug] [2025-12-18T16:33:44.887Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com 403
-[debug] [2025-12-18T16:33:44.887Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com [omitted]
+[debug] [2025-12-20T09:13:21.439Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-12-20T09:13:21.440Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
+[debug] [2025-12-20T09:13:21.441Z] Checked if tokens are valid: false, expires at: 1766209351001
+[debug] [2025-12-20T09:13:21.441Z] Checked if tokens are valid: false, expires at: 1766209351001
+[debug] [2025-12-20T09:13:21.442Z] > refreshing access token with scopes: []
+[debug] [2025-12-20T09:13:21.444Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-12-20T09:13:21.444Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-12-20T09:13:21.464Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-12-20T09:13:21.465Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
+[debug] [2025-12-20T09:13:21.465Z] Checked if tokens are valid: false, expires at: 1766209351001
+[debug] [2025-12-20T09:13:21.465Z] Checked if tokens are valid: false, expires at: 1766209351001
+[debug] [2025-12-20T09:13:21.465Z] > refreshing access token with scopes: []
+[debug] [2025-12-20T09:13:21.466Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-12-20T09:13:21.466Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-12-20T09:13:21.502Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-12-20T09:13:21.502Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-12-20T09:13:21.512Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo [none]
+[debug] [2025-12-20T09:13:21.517Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-12-20T09:13:21.517Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-12-20T09:13:21.524Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo [none]
+[debug] [2025-12-20T09:13:22.024Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo 200
+[debug] [2025-12-20T09:13:22.024Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo {"name":"projects/mangalamwifi/billingInfo","projectId":"mangalamwifi","billingAccountName":"","billingEnabled":false}
+[debug] [2025-12-20T09:13:22.031Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:22.031Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:22.045Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:22.045Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:22.045Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:22.045Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:22.045Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com [none]
+[debug] [2025-12-20T09:13:22.045Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com x-goog-quota-user=projects/mangalamwifi
+[debug] [2025-12-20T09:13:22.047Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-12-20T09:13:22.047Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/mangalamwifi
+[debug] [2025-12-20T09:13:22.048Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com [none]
+[debug] [2025-12-20T09:13:22.048Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com x-goog-quota-user=projects/mangalamwifi
+[debug] [2025-12-20T09:13:22.167Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo 200
+[debug] [2025-12-20T09:13:22.167Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo {"name":"projects/mangalamwifi/billingInfo","projectId":"mangalamwifi","billingAccountName":"","billingEnabled":false}
+[debug] [2025-12-20T09:13:22.168Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:22.169Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:22.172Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:22.172Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:22.173Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:22.173Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:22.173Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com [none]
+[debug] [2025-12-20T09:13:22.173Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com x-goog-quota-user=projects/mangalamwifi
+[debug] [2025-12-20T09:13:22.174Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-12-20T09:13:22.174Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/mangalamwifi
+[debug] [2025-12-20T09:13:22.176Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com [none]
+[debug] [2025-12-20T09:13:22.176Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com x-goog-quota-user=projects/mangalamwifi
+[debug] [2025-12-20T09:13:23.108Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-12-20T09:13:23.109Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-12-20T09:13:23.137Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com 200
+[debug] [2025-12-20T09:13:23.138Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com [omitted]
+[debug] [2025-12-20T09:13:23.159Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com 403
+[debug] [2025-12-20T09:13:23.159Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com [omitted]
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[debug] [2025-12-18T16:33:44.890Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:33:44.890Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
+[debug] [2025-12-20T09:13:23.163Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-12-20T09:13:23.163Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
+[debug] [2025-12-20T09:13:23.163Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:23.163Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:23.163Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo [none]
+[debug] [2025-12-20T09:13:23.198Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com 403
+[debug] [2025-12-20T09:13:23.199Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseio.com [omitted]
+[debug] [2025-12-20T09:13:23.331Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-12-20T09:13:23.332Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-12-20T09:13:23.355Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com 200
+[debug] [2025-12-20T09:13:23.356Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com [omitted]
+[debug] [2025-12-20T09:13:24.108Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo 200
+[debug] [2025-12-20T09:13:24.108Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo {"name":"projects/mangalamwifi/billingInfo","projectId":"mangalamwifi","billingAccountName":"","billingEnabled":false}
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[debug] [2025-12-18T16:33:44.892Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:33:44.892Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
-[debug] [2025-12-18T16:33:44.895Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com 200
-[debug] [2025-12-18T16:33:44.895Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firestore.googleapis.com [omitted]
-[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[debug] [2025-12-18T16:33:44.907Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:33:44.907Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
-[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[debug] [2025-12-18T16:33:44.908Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:33:44.908Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
-[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[debug] [2025-12-18T16:33:44.912Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:33:44.912Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
-[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[debug] [2025-12-18T16:33:44.913Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:33:44.913Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
-[debug] [2025-12-18T16:33:45.038Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com 200
-[debug] [2025-12-18T16:33:45.039Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/mangalamwifi/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-12-20T09:13:24.110Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-12-20T09:13:24.110Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[debug] [2025-12-18T16:34:05.546Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:34:05.546Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
-[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[debug] [2025-12-18T16:34:05.548Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:34:05.548Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
-[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-12-20T09:13:24.123Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-12-20T09:13:24.123Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
+[debug] [2025-12-20T09:13:24.124Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:24.124Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:24.124Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo [none]
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-12-20T09:13:24.129Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-12-20T09:13:24.129Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
+[debug] [2025-12-20T09:13:24.129Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:24.129Z] Checked if tokens are valid: true, expires at: 1766225600517
+[debug] [2025-12-20T09:13:24.129Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo [none]
+[debug] [2025-12-20T09:13:24.334Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo 200
+[debug] [2025-12-20T09:13:24.335Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo {"name":"projects/mangalamwifi/billingInfo","projectId":"mangalamwifi","billingAccountName":"","billingEnabled":false}
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[debug] [2025-12-18T16:34:05.565Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:34:05.565Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
-[debug] [2025-12-18T16:34:05.565Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:34:05.565Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
+[debug] [2025-12-20T09:13:24.336Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-12-20T09:13:24.336Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
+[debug] [2025-12-20T09:13:25.090Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo 200
+[debug] [2025-12-20T09:13:25.090Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/mangalamwifi/billingInfo {"name":"projects/mangalamwifi/billingInfo","projectId":"mangalamwifi","billingAccountName":"","billingEnabled":false}
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
-[debug] [2025-12-18T16:34:05.568Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:34:05.568Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
-[debug] [2025-12-18T16:34:05.568Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
-[debug] [2025-12-18T16:34:05.568Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)
+[debug] [2025-12-20T09:13:25.091Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-12-20T09:13:25.091Z] > authorizing via signed-in user (mangalam.rstrnt@gmail.com)

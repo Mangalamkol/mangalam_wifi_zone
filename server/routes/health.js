@@ -1,15 +1,11 @@
-import express from 'express';
-import KILL from '../config/killSwitch.js';
-
+// server/routes/health.js
+import express from "express";
 const router = express.Router();
 
-// 🩺 HEALTH CHECK API
-router.get("/", (req, res) => {
+router.get("/ping", (req, res) => {
   res.json({
-    status: KILL.SYSTEM_ENABLED ? "LIVE" : "DOWN",
-    payment: KILL.PAYMENT_ENABLED ? "LIVE" : "DOWN",
-    whatsapp: KILL.WHATSAPP_ENABLED ? "LIVE" : "DOWN",
-    server_time: new Date().toISOString()
+    status: "ok",
+    time: new Date().toISOString(),
   });
 });
 

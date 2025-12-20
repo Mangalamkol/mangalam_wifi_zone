@@ -2,6 +2,7 @@
 import express from "express";
 import adminControl from "./routes/adminControl.js";
 import { systemGuard } from "./middleware/adminFeatureGuard.js";
+import healthRoute from "./routes/health.js";
 
 const app = express();
 app.use(express.json());
@@ -13,9 +14,7 @@ app.use(systemGuard);
 app.use("/api/admin", adminControl);
 
 // ✅ HEALTH CHECK
-app.get("/api/health", (req, res) => {
-  res.json({ status: "OK", service: "Mangalam WiFi Zone" });
-});
+app.use("/api", healthRoute);
 
 app.get("/", (req, res) => {
   res.status(200).send(`
@@ -23,14 +22,14 @@ app.get("/", (req, res) => {
       <head>
         <title>Mangalam WiFi Zone</title>
       </head>
-      <body style="font-family:sans-serif">
+      <body style=\"font-family:sans-serif\">
         <h2>Mangalam WiFi Zone – LIVE</h2>
         <ul>
           <li>Status: OK</li>
           <li>Backend: Active</li>
           <li>
             Web Client:
-            <a href="https://mangalamwifi.web.app" target="_blank">
+            <a href=\"https://mangalamwifi.web.app\" target=\"_blank\">
               Open
             </a>
           </li>
