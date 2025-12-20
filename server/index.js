@@ -1,45 +1,19 @@
-
 import express from "express";
-import adminControl from "./routes/adminControl.js";
-import { systemGuard } from "./middleware/adminFeatureGuard.js";
-import healthRoute from "./routes/health.js";
+import cors from "cors";
+import connectDB from "./utils/db.js";
+import planRoutes from "./routes/planRoutes.js";
 
 const app = express();
+
+app.use(cors());
 app.use(express.json());
 
-// 🔒 SYSTEM GUARD
-app.use(systemGuard);
+app.use("/api/plans", planRoutes);
 
-// 🔑 ADMIN API
-app.use("/api/admin", adminControl);
+const PORT = process.env.PORT || 18000;
 
-// ✅ HEALTH CHECK
-app.use("/api", healthRoute);
-
-app.get("/", (req, res) => {
-  res.status(200).send(`
-    <html>
-      <head>
-        <title>Mangalam WiFi Zone</title>
-      </head>
-      <body style=\"font-family:sans-serif\">
-        <h2>Mangalam WiFi Zone – LIVE</h2>
-        <ul>
-          <li>Status: OK</li>
-          <li>Backend: Active</li>
-          <li>
-            Web Client:
-            <a href=\"https://mangalamwifi.web.app\" target=\"_blank\">
-              Open
-            </a>
-          </li>
-        </ul>
-      </body>
-    </html>
-  `);
-});
-
-const PORT = process.env.PORT || 10000;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log("SERVER RUNNING ON PORT", PORT);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log("SERVER RUNNING ON PORT", PORT);
+  });
 });

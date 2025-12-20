@@ -1,63 +1,35 @@
-import Plan from '../models/Plan.js';
+import Plan from "../models/Plan.js";
+import AuditLog from "../models/AuditLog.js";
 
-// @desc    Get all plans
-// @route   GET /api/plans
-// @access  Public
 export const getPlans = async (req, res) => {
   try {
-    const plans = await Plan.find({});
-    const formattedPlans = plans.map(plan => {
-      const planObject = plan.toObject();
-      if (planObject.duration.hours) {
-        planObject.durationHours = planObject.duration.hours;
-      } else if (planObject.duration.days) {
-        planObject.durationDays = planObject.duration.days;
-      }
-      delete planObject.duration;
-      delete planObject._id;
-      delete planObject.__v;
-      return planObject;
-    });
-    res.json(formattedPlans);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
+    const plans = await Plan.find();
+    res.json(plans);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
-// @desc    Create a plan
-// @route   POST /api/plans
-// @access  Admin
 export const createPlan = async (req, res) => {
+  const { id, name, duration, price, maxDevices } = req.body;
+
+  const plan = new Plan({
+    id,
+    name,
+    duration,
+    price,
+    maxDevices,
+  });
+
   try {
-    const { durationHours, durationDays, ...rest } = req.body;
-    const duration = {};
-    if (durationHours) {
-      duration.hours = durationHours;
-    } else if (durationDays) {
-      duration.days = durationDays;
-    }
-
-    const planData = { ...rest, duration };
-
-    const plan = await Plan.create(planData);
-
-    const planObject = plan.toObject();
-    if (planObject.duration.hours) {
-      planObject.durationHours = planObject.duration.hours;
-    } else if (planObject.duration.days) {
-      planObject.durationDays = planObject.duration.days;
-    }
-    delete planObject.duration;
-    delete planObject._id;
-    delete planObject.__v;
-
-    res.status(201).json(planObject);
-  } catch (err) {
-    console.error(err.message);
-    if (err.code === 11000) {
-      return res.status(400).json({ msg: 'Plan with this ID already exists' });
-    }
-    res.status(500).send('Server Error');
+    const newPlan = await plan.save();
+    const auditLog = new AuditLog({
+      action: "CREATE_PLAN",
+      payload: newPlan,
+    });
+    await auditLog.save();
+    res.status(201).json(newPlan);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 };

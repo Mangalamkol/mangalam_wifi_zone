@@ -1,30 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const planSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  duration: {
-    type: Map,
-    of: Number,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-  maxDevices: {
-    type: Number,
-    required: true,
-  },
-});
+  id: String,
+  name: String,
+  duration: Number,
+  price: Number,
+  maxDevices: Number,
+}, { timestamps: true });
 
-const Plan = mongoose.model('Plan', planSchema);
+const Plan = mongoose.model("Plan", planSchema);
 
 export default Plan;
