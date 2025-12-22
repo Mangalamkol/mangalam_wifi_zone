@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:mangalam_wifi_zone/screens/recover_coupon_screen.dart';
 
 class WebViewContainer extends StatefulWidget {
   const WebViewContainer({super.key});
@@ -24,6 +26,17 @@ class _WebViewContainerState extends State<WebViewContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return WebViewWidget(controller: _controller);
+    return Scaffold(
+      body: WebViewWidget(controller: _controller),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const RecoverCouponScreen()),
+          );
+        },
+        child: const Icon(Icons.confirmation_number),
+      ),
+    );
   }
 }

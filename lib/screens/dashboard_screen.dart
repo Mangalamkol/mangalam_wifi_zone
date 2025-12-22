@@ -553,11 +553,6 @@ class _AlertsAndAdminActions extends StatelessWidget {
                 ),
                 ElevatedButton.icon(
                   onPressed: () {},
-                  icon: const Icon(Icons.cloud_upload),
-                  label: const Text('Push Updates'),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {},
                   icon: const Icon(Icons.storage),
                   label: const Text('Backup Data'),
                 ),

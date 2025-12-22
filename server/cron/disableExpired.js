@@ -1,6 +1,6 @@
-const Coupon = require("../models/Coupon");
+import Coupon from "../models/coupon.model.js";
 
-module.exports = async function disableExpired() {
+export default async function disableExpired() {
   try {
     const now = new Date();
 
@@ -19,4 +19,4 @@ module.exports = async function disableExpired() {
     console.error("disableExpired() ERROR:", err.message);
     return 0;
   }
-};
+}

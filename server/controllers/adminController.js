@@ -1,5 +1,7 @@
 import fs from 'fs';
 import path from 'path';
+import Admin from "../models/Admin.js";
+import { signAdminToken } from "../utils/jwt.js";
 
 const configPath = path.resolve(process.cwd(), 'server', 'config', 'adminLiveConfig.js');
 
@@ -49,4 +51,20 @@ export const updateStatus = (req, res) => {
         console.error(e);
         res.status(500).send('Error updating admin config');
     }
+};
+
+export const adminLogin = async (req, res) => {
+  const { username, password } = req.body;
+
+  const admin = await Admin.findOne({ username });
+  if (!admin || !(await admin.comparePassword(password))) {
+    return res.status(401).json({ message: "Invalid credentials" });
+  }
+
+  const token = signAdminToken(admin);
+
+  res.json({
+    token,
+    admin: { username: admin.username }
+  });
 };

@@ -1,6 +1,6 @@
-const Transaction = require("../models/Transaction");
+import Transaction from "../models/transaction.model.js";
 
-module.exports = async function refundManager() {
+export default async function refundManager() {
   try {
     const pendingRefunds = await Transaction.find({ status: "refund_pending" });
 
@@ -24,4 +24,4 @@ module.exports = async function refundManager() {
     console.error("refundManager() ERROR:", err.message);
     return 0;
   }
-};
+}

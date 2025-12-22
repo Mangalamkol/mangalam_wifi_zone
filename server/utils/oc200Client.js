@@ -1,4 +1,7 @@
-const axios = require('axios');
+import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: './server/.env' });
 
 const oc200Client = axios.create({
   baseURL: process.env.OC200_URL,
@@ -12,7 +15,7 @@ const oc200Client = axios.create({
 let token = null; // In-memory token storage
 
 // --- Authentication ---
-const login = async () => {
+export const login = async () => {
   try {
     if (token) return token;
     const res = await oc200Client.post('/login', {
@@ -28,7 +31,7 @@ const login = async () => {
   }
 };
 
-const logout = async () => {
+export const logout = async () => {
   try {
     if (!token) return;
     await oc200Client.post('/logout', {}, { headers: { 'Authorization': `Bearer ${token}` } });
@@ -69,7 +72,7 @@ const apiRequest = async (method, url, data = null) => {
 
 // --- High-Level API Methods ---
 
-const createVoucher = async (couponCode, plan) => {
+export const createVoucher = async (couponCode, plan) => {
   // Assuming the plan object has properties like duration, speed, etc.
   // The payload will depend on the OC200 API's requirements for voucher creation
   const voucherData = {
@@ -81,19 +84,19 @@ const createVoucher = async (couponCode, plan) => {
   return await apiRequest('post', '/create-voucher', voucherData);
 };
 
-const getAccessPoints = async () => {
+export const getAccessPoints = async () => {
   return await apiRequest('get', '/aps');
 };
 
-const getActiveSessions = async () => {
+export const getActiveSessions = async () => {
   return await apiRequest('get', '/clients'); // Assuming '/clients' gives session info
 };
 
-const disconnectClient = async (mac) => {
+export const disconnectClient = async (mac) => {
   return await apiRequest('post', `/clients/disconnect`, { mac });
 };
 
-const getApLoadInfo = async () => {
+export const getApLoadInfo = async () => {
   const aps = await getAccessPoints();
   // This is a simplified representation. A real implementation would involve
   // more detailed stats from the controller, possibly from a different endpoint.
@@ -103,15 +106,4 @@ const getApLoadInfo = async () => {
     cpuLoad: Math.random() * 100, // Placeholder
     memoryUsage: Math.random() * 100 // Placeholder
   }));
-};
-
-
-module.exports = {
-  login,
-  logout,
-  createVoucher,
-  getAccessPoints,
-  getActiveSessions,
-  disconnectClient,
-  getApLoadInfo,
 };

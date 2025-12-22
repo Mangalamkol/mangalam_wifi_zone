@@ -1,8 +1,15 @@
-export default function adminAuth(req, res, next) {
-  // const token = req.headers["x-admin-token"];
+import jwt from "jsonwebtoken";
 
-  // if (!token || token !== process.env.ADMIN_TOKEN) {
-  //   return res.status(401).json({ error: "ADMIN UNAUTHORIZED" });
-  // }
-  next();
+export default function adminAuth(req, res, next) {
+  const header = req.headers.authorization;
+  if (!header) return res.sendStatus(401);
+
+  const token = header.split(" ")[1];
+
+  try {
+    req.admin = jwt.verify(token, process.env.JWT_SECRET);
+    next();
+  } catch {
+    res.sendStatus(401);
+  }
 }

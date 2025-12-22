@@ -13,7 +13,6 @@ router.post('/otp/request', voucherController.requestOtp); // request OTP to vie
 router.post('/otp/verify', voucherController.verifyOtp);   // verify OTP to fetch voucher
 
 // Admin routes
-router.post('/upload/:planId', auth, requireAdmin, voucherController.uploadVouchers);
 router.post('/:id/disable', auth, requireAdmin, voucherController.disableVoucher);
 router.get('/plan/:planId', auth, requireAdmin, voucherController.getVouchersByPlan);
 
